@@ -14,6 +14,12 @@
   document.title = trip.title;
   $("title").textContent = trip.title;
   $("subtitle").textContent = trip.subtitle || "";
+  if (trip.photo) {
+    $("photo-img").src = trip.photo;
+    $("photo-img").alt = trip.title;
+    $("photo").hidden = false;
+    document.querySelector(".hero").classList.add("has-photo");
+  }
   $("range").textContent = `${fmtDate(trip.startDate)} – ${fmtDate(trip.endDate)} · ${trip.days.length}일`;
 
   const today = todayStr();

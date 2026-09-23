@@ -4,6 +4,7 @@
 window.TRIP = {
   title: "가을이네 가족 도쿄 4박5일 여행",
   subtitle: "秋の東京 · 단풍 물든 도쿄로",
+  photo: "images/family.jpg",   // 상단 사진 (지우면 사진 없이 표시)
   startDate: "2026-10-08",
   endDate: "2026-10-12",
   members: ["나", "친구"],

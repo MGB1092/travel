@@ -50,7 +50,7 @@ body {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.09' stroke-width='1.2'%3E%3Cpath d='M0 20a20 20 0 0 1 40 0M6 20a14 14 0 0 1 28 0M12 20a8 8 0 0 1 16 0M-20 10a20 20 0 0 1 40 0M20 10a20 20 0 0 1 40 0'/%3E%3C/g%3E%3C/svg%3E"),
     linear-gradient(165deg, #5e1a1a 0%, #a8322d 50%, #d2691e 100%);
 }
-.hero > *:not(.scene):not(.leaves) { position: relative; z-index: 2; }
+.hero > *:not(.scene):not(.leaves):not(.photo) { position: relative; z-index: 2; }
 .hero h1 {
   margin: 6px 0 4px; font-family: var(--serif);
   font-size: 26px; font-weight: 700; line-height: 1.35;
@@ -245,3 +245,20 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
 .sync-live { color: #3f7d4e; }
 .sync-offline { color: var(--now); }
 @media (prefers-color-scheme: dark) { .sync-live { color: #8cc79a; } }
+
+/* 상단 사진: 폴라로이드 느낌 */
+.photo {
+  position: absolute; z-index: 3; top: calc(22px + env(safe-area-inset-top)); right: 18px;
+  width: 104px; margin: 0; padding: 5px 5px 16px;
+  background: #fffaf1; border-radius: 3px;
+  box-shadow: 0 6px 16px rgba(40, 10, 5, .35);
+  transform: rotate(4deg);
+}
+.photo::before {   /* 마스킹 테이프 */
+  content: ""; position: absolute; top: -8px; left: 50%; width: 44px; height: 14px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(232, 196, 120, .75);
+}
+.photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 1px; }
+.hero.has-photo .dday,
+.hero.has-photo h1 { margin-right: 118px; }
