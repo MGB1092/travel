@@ -174,11 +174,13 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
   padding-bottom: env(safe-area-inset-bottom);
   z-index: 10;
 }
-.bottom-bar button {
+.bottom-bar button, .bottom-bar .bar-link {
   flex: 1; border: 0; background: none; color: var(--muted);
   padding: 8px 0 10px; font-size: 12px; cursor: pointer;
 }
-.bottom-bar button span { display: block; font-size: 20px; margin-bottom: 2px; }
+.bottom-bar .bar-link { text-align: center; text-decoration: none; font-family: inherit; }
+.bottom-bar button, .bottom-bar .bar-link { line-height: 1.2; font-family: inherit; }
+.bottom-bar button span, .bottom-bar .bar-link span { display: block; font-size: 20px; margin-bottom: 2px; }
 .bottom-bar button.active { color: var(--primary); font-weight: 700; }
 
 .day-wx { margin: -8px 0 16px; }
