@@ -34,20 +34,65 @@
     c === 0 ? ["☀️", "맑음"] : c <= 2 ? ["🌤️", "구름 조금"] : c === 3 ? ["☁️", "흐림"] :
     c <= 48 ? ["🌫️", "안개"] : c <= 57 ? ["🌦️", "이슬비"] : c <= 67 ? ["🌧️", "비"] :
     c <= 77 ? ["🌨️", "눈"] : c <= 82 ? ["🌧️", "소나기"] : c <= 86 ? ["🌨️", "눈"] : ["⛈️", "뇌우"];
-  const forecast = {}; // date -> { code, max, min, rain }
+  const forecast = {}; // date -> { code, max, min, rain }   (실제 예보, 최대 16일 앞)
+  const climo = {};    // date -> { max, min, rain }         (최근 10년 같은 날짜 평균)
+  const FORECAST_DAYS = 16;
+  // 해당 날짜의 예보가 처음 나오는 날 (오늘 포함 16일 범위)
+  const forecastFrom = (date) => { const d = parseDate(date); d.setDate(d.getDate() - (FORECAST_DAYS - 1)); return d; };
   function weatherFor(date) {
     const f = forecast[date];
     if (f) {
       const [icon, label] = WMO(f.code);
       return { icon, label, max: Math.round(f.max), min: Math.round(f.min), rain: f.rain, live: true };
     }
+    const c = climo[date];
+    if (c) {
+      const icon = c.rain >= 50 ? "🌦️" : c.rain >= 30 ? "⛅" : "🌤️";
+      return { icon, label: "10년 평균", max: Math.round(c.max), min: Math.round(c.min), rain: c.rain, live: false };
+    }
     const n = trip.weather && trip.weather.normal;
     return n ? { icon: "🍂", label: "평년", max: n.max, min: n.min, live: false } : null;
+  }
+  function pendingNote(date) {
+    if (forecast[date]) return "";
+    const from = forecastFrom(date);
+    return from > new Date() ? `${from.getMonth() + 1}/${from.getDate()}부터 예보` : "";
   }
   function weatherChip(date) {
     const w = weatherFor(date);
     if (!w) return "";
-    return `<span class="wx ${w.live ? "" : "normal"}">${w.icon} ${w.max}° / ${w.min}°${w.rain != null ? ` · ☔ ${w.rain}%` : ""}${w.live ? "" : " · 평년"}</span>`;
+    const tail = w.live ? "" : ` · ${w.label}${pendingNote(date) ? " (" + pendingNote(date) + ")" : ""}`;
+    return `<span class="wx ${w.live ? "" : "normal"}">${w.icon} ${w.max}° / ${w.min}°${w.rain != null ? ` · ☔ ${w.rain}%` : ""}${tail}</span>`;
+  }
+  // 최근 10년(작년까지) 같은 날짜의 실제 관측값 평균 → 예보가 없는 날에 사용
+  function loadClimate() {
+    const W = trip.weather;
+    if (!W) return;
+    const lastYear = parseDate(trip.startDate).getFullYear() - 1;
+    const md = (s) => s.slice(5);
+    const want = new Set(trip.days.map((d) => md(d.date)));
+    const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${W.lat}&longitude=${W.lon}` +
+      `&start_date=${lastYear - 9}${trip.startDate.slice(4)}&end_date=${lastYear}${trip.endDate.slice(4)}` +
+      `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=${encodeURIComponent(W.timezone || "auto")}`;
+    fetch(url)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((data) => {
+        const d = data.daily, acc = {};
+        d.time.forEach((t, i) => {
+          const k = md(t);
+          if (!want.has(k) || d.temperature_2m_max[i] == null) return;
+          const a = (acc[k] = acc[k] || { max: 0, min: 0, wet: 0, n: 0 });
+          a.max += d.temperature_2m_max[i]; a.min += d.temperature_2m_min[i];
+          a.wet += (d.precipitation_sum[i] || 0) >= 1 ? 1 : 0; a.n++;
+        });
+        trip.days.forEach((day) => {
+          const a = acc[md(day.date)];
+          if (a && a.n) climo[day.date] = { max: a.max / a.n, min: a.min / a.n, rain: Math.round((a.wet / a.n) * 100) };
+        });
+        renderDay();
+        renderInfo();
+      })
+      .catch(() => {}); // 실패 시 10월 평년값 유지
   }
   function loadForecast() {
     const W = trip.weather;
@@ -171,11 +216,11 @@
         ${trip.days.map((d) => {
           const w = weatherFor(d.date);
           return `<li><span class="d">${fmtDate(d.date)}</span><span class="i">${w.icon}</span>
-            <span class="l">${w.label}</span><span class="t"><b>${w.max}°</b> ${w.min}°</span>
+            <span class="l">${w.label}${pendingNote(d.date) ? `<small>${pendingNote(d.date)}</small>` : ""}</span><span class="t"><b>${w.max}°</b> ${w.min}°</span>
             <span class="r">${w.rain != null ? "☔ " + w.rain + "%" : ""}</span></li>`;
         }).join("")}
       </ul>
-      <p class="progress">${Object.keys(forecast).length ? "실시간 예보(Open-Meteo) · " : ""}예보가 없는 날은 10월 평년값${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>
+      <p class="progress">일기예보는 최대 ${FORECAST_DAYS}일 앞까지 나와서, 그 전에는 최근 10년 같은 날짜의 평균(☔ = 비 온 해의 비율)을 보여줍니다. 예보가 나오면 자동으로 바뀝니다.${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>
       ${trip.weather.link ? `<a class="btn-link" href="${esc(trip.weather.link.url)}" target="_blank" rel="noopener">🌤️ ${esc(trip.weather.link.label)} ↗</a>` : ""}` : ""}`;
     $("info-box").innerHTML = `
       <h2>여행 정보</h2>
@@ -295,6 +340,7 @@
   renderCheck();
   renderFx();
   loadForecast();
+  loadClimate();
   loadFx();
   connectShared();
 })();

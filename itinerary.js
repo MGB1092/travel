@@ -17,7 +17,7 @@ window.TRIP = {
     timezone: "Asia/Tokyo",
     link: { label: "AccuWeather에서 자세히 보기", url: "https://www.accuweather.com/ko/jp/tokyo/226396/october-weather/226396?year=2026" },
     // 도쿄 10월 평년값 (일본 기상청 1991–2020 기준, 대략값)
-    normal: { max: 22, min: 15, note: "비 오는 날 약 3일에 1번 · 얇은 겉옷 추천" }
+    normal: { max: 22, min: 15, note: "아침저녁 쌀쌀하니 얇은 겉옷 추천" }
   },
 
   // 환율: 실시간(무료 API, 하루 1회 이상 갱신) 조회 실패 시 fallback 사용 (1엔당 원)
