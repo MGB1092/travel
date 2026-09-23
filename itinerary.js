@@ -33,7 +33,7 @@ window.TRIP = {
       items: [
         { time: "07:30", type: "move", title: "청주국제공항 도착", place: "Cheongju International Airport", memo: "출발 2시간 전 · 기내식 없으니 간단히 요기" },
         { time: "09:30", type: "flight", title: "RF322 청주 출발", memo: "에어로케이항공 · A320" },
-        { time: "11:50", type: "move", title: "나리타 T3 도착", place: "Narita Airport Terminal 3", memo: "입국심사 후 제2터미널역까지 도보 약 15분" },
+        { time: "11:50", type: "flight", title: "나리타 T3 도착", place: "Narita Airport Terminal 3", memo: "입국심사 후 제2터미널역까지 도보 약 15분" },
         { time: "13:30", type: "move", title: "스카이라이너 → 신주쿠", memo: "닛포리 환승 · 약 1시간 30분" },
         { time: "15:00", type: "stay", title: "호텔 체크인", place: "Hotel Gracery Shinjuku" },
         { time: "15:30", type: "food", title: "늦은 점심 · 후운지 츠케멘", place: "Fuunji Shinjuku" },
