@@ -16,3 +16,18 @@
 
 ## 실행
 `index.html`을 브라우저로 열거나, GitHub Pages로 배포하면 휴대폰에서 바로 볼 수 있습니다.
+
+## 준비물 공유 (Firebase Realtime Database)
+`itinerary.js`의 `shared.dbUrl`에 Firebase Realtime Database 주소를 넣으면 체크 상태가 접속한 모든 사람에게 실시간 공유됩니다.
+비워 두면 각 기기에만 저장됩니다. 권장 보안 규칙:
+
+```json
+{
+  "rules": {
+    "trips": { "$trip": { "checklist": {
+      ".read": true, ".write": true,
+      "$item": { ".validate": "newData.isBoolean()" }
+    } } }
+  }
+}
+```

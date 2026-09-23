@@ -241,3 +241,7 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
   .tabs button.active { color: #1b1613; }
   .tabs button.active small { color: rgba(27,22,19,.75); }
 }
+.sync { font-size: 13px; margin: -4px 0 12px; color: var(--muted); }
+.sync-live { color: #3f7d4e; }
+.sync-offline { color: var(--now); }
+@media (prefers-color-scheme: dark) { .sync-live { color: #8cc79a; } }
