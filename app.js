@@ -22,6 +22,48 @@
     diff > 0 ? `D-${diff}` :
     today <= trip.endDate ? `여행 ${1 - diff}일차` : "여행 완료 🎉";
 
+
+  // 날씨: Open-Meteo 예보 (API 키 불필요). 예보 범위 밖이면 평년값 사용
+  const WMO = (c) =>
+    c === 0 ? ["☀️", "맑음"] : c <= 2 ? ["🌤️", "구름 조금"] : c === 3 ? ["☁️", "흐림"] :
+    c <= 48 ? ["🌫️", "안개"] : c <= 57 ? ["🌦️", "이슬비"] : c <= 67 ? ["🌧️", "비"] :
+    c <= 77 ? ["🌨️", "눈"] : c <= 82 ? ["🌧️", "소나기"] : c <= 86 ? ["🌨️", "눈"] : ["⛈️", "뇌우"];
+  const forecast = {}; // date -> { code, max, min, rain }
+  function weatherFor(date) {
+    const f = forecast[date];
+    if (f) {
+      const [icon, label] = WMO(f.code);
+      return { icon, label, max: Math.round(f.max), min: Math.round(f.min), rain: f.rain, live: true };
+    }
+    const n = trip.weather && trip.weather.normal;
+    return n ? { icon: "🍂", label: "평년", max: n.max, min: n.min, live: false } : null;
+  }
+  function weatherChip(date) {
+    const w = weatherFor(date);
+    if (!w) return "";
+    return `<span class="wx ${w.live ? "" : "normal"}">${w.icon} ${w.max}° / ${w.min}°${w.rain != null ? ` · ☔ ${w.rain}%` : ""}${w.live ? "" : " · 평년"}</span>`;
+  }
+  function loadForecast() {
+    const W = trip.weather;
+    if (!W) return;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${W.lat}&longitude=${W.lon}` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+      `&timezone=${encodeURIComponent(W.timezone || "auto")}&forecast_days=16`;
+    fetch(url)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((data) => {
+        const d = data.daily;
+        d.time.forEach((t, i) => {
+          if (t >= trip.startDate && t <= trip.endDate) {
+            forecast[t] = { code: d.weather_code[i], max: d.temperature_2m_max[i], min: d.temperature_2m_min[i], rain: d.precipitation_probability_max[i] };
+          }
+        });
+        renderDay();
+        renderInfo();
+      })
+      .catch(() => {}); // 오프라인 등 실패 시 평년값 유지
+  }
+
   // 일자 탭
   let current = Math.max(0, trip.days.findIndex((d) => d.date === today));
   const tabs = $("tabs");
@@ -47,6 +89,7 @@
 
     $("day-view").innerHTML = `
       <h2>Day ${current + 1} · ${esc(day.title)}<small>${fmtDate(day.date)}</small></h2>
+      ${weatherChip(day.date) ? `<p class="day-wx">${weatherChip(day.date)}</p>` : ""}
       <ol class="timeline">
         ${day.items.map((it, i) => `
           <li class="item ${isToday && i === nowIdx ? "now" : ""} ${isToday && i < nowIdx ? "done" : ""}">
@@ -63,6 +106,17 @@
 
   function renderInfo() {
     $("info-view").innerHTML = `
+      ${trip.weather ? `
+      <h2>${esc(trip.weather.city)} 날씨</h2>
+      <ul class="wx-list">
+        ${trip.days.map((d) => {
+          const w = weatherFor(d.date);
+          return `<li><span class="d">${fmtDate(d.date)}</span><span class="i">${w.icon}</span>
+            <span class="l">${w.label}</span><span class="t"><b>${w.max}°</b> ${w.min}°</span>
+            <span class="r">${w.rain != null ? "☔ " + w.rain + "%" : ""}</span></li>`;
+        }).join("")}
+      </ul>
+      <p class="progress">${Object.keys(forecast).length ? "실시간 예보(Open-Meteo) · " : ""}예보가 없는 날은 10월 평년값${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>` : ""}
       <h2>여행 정보</h2>
       <ul class="list">
         ${trip.info.map((x) => `
@@ -123,4 +177,5 @@
   renderDay();
   renderInfo();
   renderCheck();
+  loadForecast();
 })();

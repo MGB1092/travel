@@ -2,15 +2,25 @@
 // time: "HH:MM", type: move | food | sight | stay | shop | etc
 // place 가 있으면 구글 지도 링크가 자동으로 붙습니다.
 window.TRIP = {
-  title: "도쿄 3박 4일",
+  title: "도쿄 4박 5일",
   subtitle: "가을 도쿄 산책 여행",
-  startDate: "2026-10-15",
-  endDate: "2026-10-18",
+  startDate: "2026-10-08",
+  endDate: "2026-10-12",
   members: ["나", "친구"],
 
+  // 날씨: 예보(약 16일 이내)가 있으면 실시간 예보, 없으면 평년 기후값을 보여줍니다.
+  weather: {
+    city: "도쿄",
+    lat: 35.6895,
+    lon: 139.6917,
+    timezone: "Asia/Tokyo",
+    // 도쿄 10월 평년값 (일본 기상청 1991–2020 기준, 대략값)
+    normal: { max: 22, min: 15, note: "비 오는 날 약 3일에 1번 · 얇은 겉옷 추천" }
+  },
+
   info: [
-    { icon: "✈️", label: "가는 편", value: "KE703 · 10/15 08:30 인천 → 10:50 나리타" },
-    { icon: "✈️", label: "오는 편", value: "KE704 · 10/18 17:40 나리타 → 20:20 인천" },
+    { icon: "✈️", label: "가는 편", value: "KE703 · 10/8 08:30 인천 → 10:50 나리타" },
+    { icon: "✈️", label: "오는 편", value: "KE704 · 10/12 17:40 나리타 → 20:20 인천" },
     { icon: "🏨", label: "숙소", value: "신주쿠 그레이서리 호텔", place: "Hotel Gracery Shinjuku" },
     { icon: "💴", label: "환율 메모", value: "100엔 ≈ 900원" },
     { icon: "🚨", label: "긴급 연락처", value: "주일 한국대사관 +81-3-3455-2601", tel: "+81334552601" }
@@ -18,7 +28,7 @@ window.TRIP = {
 
   days: [
     {
-      date: "2026-10-15",
+      date: "2026-10-08",
       title: "도착 & 신주쿠",
       items: [
         { time: "08:30", type: "move", title: "인천공항 출발", memo: "2시간 전 도착" },
@@ -31,7 +41,7 @@ window.TRIP = {
       ]
     },
     {
-      date: "2026-10-16",
+      date: "2026-10-09",
       title: "아사쿠사 & 스카이트리",
       items: [
         { time: "09:30", type: "sight", title: "센소지", place: "Senso-ji" },
@@ -42,7 +52,7 @@ window.TRIP = {
       ]
     },
     {
-      date: "2026-10-17",
+      date: "2026-10-10",
       title: "시부야 & 하라주쿠",
       items: [
         { time: "10:00", type: "sight", title: "메이지 신궁", place: "Meiji Jingu" },
@@ -53,7 +63,19 @@ window.TRIP = {
       ]
     },
     {
-      date: "2026-10-18",
+      date: "2026-10-11",
+      title: "가마쿠라 당일치기",
+      items: [
+        { time: "09:00", type: "move", title: "신주쿠 → 가마쿠라", memo: "JR 쇼난신주쿠 라인 약 1시간" },
+        { time: "10:30", type: "sight", title: "쓰루가오카 하치만구", place: "Tsurugaoka Hachimangu" },
+        { time: "12:00", type: "food", title: "점심 · 시라스동", place: "Komachi-dori Kamakura" },
+        { time: "13:30", type: "sight", title: "가마쿠라 대불", place: "Kotoku-in" },
+        { time: "15:30", type: "sight", title: "에노덴 타고 가마쿠라코코마에 바다", place: "Kamakurakokomae Station" },
+        { time: "19:30", type: "food", title: "저녁 · 신주쿠 이자카야", place: "Shinjuku" }
+      ]
+    },
+    {
+      date: "2026-10-12",
       title: "쇼핑 & 귀국",
       items: [
         { time: "10:00", type: "stay", title: "체크아웃" },
