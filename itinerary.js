@@ -96,7 +96,7 @@ window.TRIP = {
 
   // 준비물 공유 저장소 (Firebase Realtime Database 주소). 비워 두면 각자 기기에만 저장됩니다.
   shared: {
-    dbUrl: "",   // 예: "https://gaeul-tokyo-default-rtdb.asia-southeast1.firebasedatabase.app"
+    dbUrl: "https://gaeul-tokyo-default-rtdb.asia-southeast1.firebasedatabase.app",
     path: "trips/gaeul-tokyo-2026/checklist"
   },
 
