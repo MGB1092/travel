@@ -15,7 +15,7 @@ window.TRIP = {
     lat: 35.6895,
     lon: 139.6917,
     timezone: "Asia/Tokyo",
-    link: { label: "AccuWeather에서 자세히 보기", url: "https://www.accuweather.com/ko/jp/tokyo/226396/daily-weather-forecast/226396" },
+    link: { label: "AccuWeather에서 자세히 보기", url: "https://www.accuweather.com/ko/jp/tokyo/226396/october-weather/226396?year=2026" },
     // 도쿄 10월 평년값 (일본 기상청 1991–2020 기준, 대략값)
     normal: { max: 22, min: 15, note: "비 오는 날 약 3일에 1번 · 얇은 겉옷 추천" }
   },
