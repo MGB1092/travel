@@ -3,7 +3,7 @@
 // place 가 있으면 구글 지도 링크가 자동으로 붙습니다.
 window.TRIP = {
   title: "가을이네 가족 도쿄 4박5일 여행",
-  subtitle: "가을 도쿄 산책 여행",
+  subtitle: "秋の東京 · 단풍 물든 도쿄로",
   startDate: "2026-10-08",
   endDate: "2026-10-12",
   members: ["나", "친구"],
