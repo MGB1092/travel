@@ -1,6 +1,6 @@
 (function () {
   const trip = window.TRIP;
-  const TYPE_ICON = { move: "🚆", food: "🍜", sight: "📸", stay: "🏨", shop: "🛍️", etc: "📌" };
+  const TYPE_ICON = { flight: "✈️", move: "🚆", food: "🍜", sight: "📸", stay: "🏨", shop: "🛍️", etc: "📌" };
   const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
   const $ = (id) => document.getElementById(id);
 
@@ -125,6 +125,7 @@
             <div>
               <div class="label">${esc(x.label)}</div>
               <div class="value">${esc(x.value)}</div>
+              ${x.memo ? `<div class="label">${esc(x.memo)}</div>` : ""}
               ${x.place ? `<a href="${mapUrl(x.place)}" target="_blank" rel="noopener">📍 지도</a>` : ""}
               ${x.tel ? `<a href="tel:${esc(x.tel)}">📞 전화 걸기</a>` : ""}
             </div>
