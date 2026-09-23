@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>여행 일정</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <p class="dday" id="dday"></p>
+    <h1 id="title"></h1>
+    <p class="sub" id="subtitle"></p>
+    <p class="range" id="range"></p>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="일자 선택"></nav>
+
+  <main>
+    <section id="day-view"></section>
+    <section id="info-view" hidden></section>
+    <section id="check-view" hidden></section>
+  </main>
+
+  <nav class="bottom-bar" aria-label="메뉴">
+    <button data-view="day" class="active"><span>🗓️</span>일정</button>
+    <button data-view="info"><span>ℹ️</span>정보</button>
+    <button data-view="check"><span>✅</span>준비물</button>
+  </nav>
+
+  <script src="itinerary.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

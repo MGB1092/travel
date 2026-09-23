@@ -1,0 +1,135 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --primary: #2563eb;
+  --primary-soft: #dbeafe;
+  --now: #f97316;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --line: #334155;
+    --primary: #60a5fa;
+    --primary-soft: #1e3a5f;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.hero {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  padding: calc(28px + env(safe-area-inset-top)) 20px 24px;
+}
+.hero h1 { margin: 4px 0; font-size: 26px; }
+.hero .sub { margin: 0; opacity: .9; }
+.hero .range { margin: 10px 0 0; font-size: 14px; opacity: .85; }
+.dday {
+  display: inline-block; margin: 0;
+  background: rgba(255,255,255,.2);
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+}
+
+.tabs {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: var(--card); color: var(--text);
+  border-radius: 999px; padding: 8px 14px;
+  font-size: 14px; line-height: 1.2; cursor: pointer;
+}
+.tabs button small { display: block; font-size: 11px; color: var(--muted); }
+.tabs button.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.tabs button.active small { color: rgba(255,255,255,.85); }
+.tabs button.today:not(.active) { border-color: var(--now); }
+
+main { padding: 16px; }
+h2 { font-size: 18px; margin: 4px 0 16px; }
+h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before {
+  content: ""; position: absolute; left: 21px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--line);
+}
+.item { position: relative; display: flex; gap: 12px; margin-bottom: 12px; }
+.item .icon {
+  flex: 0 0 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 20px;
+  background: var(--card); border: 2px solid var(--line); z-index: 1;
+}
+.item.now .icon { border-color: var(--now); box-shadow: 0 0 0 4px rgba(249,115,22,.2); }
+.item.done { opacity: .55; }
+.card {
+  flex: 1; min-width: 0;
+  background: var(--card); border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.card .time { font-size: 13px; font-weight: 700; color: var(--primary); }
+.item.now .card .time { color: var(--now); }
+.card .title { margin: 2px 0 0; font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.card .memo { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.card a.map {
+  display: inline-block; margin-top: 8px;
+  font-size: 13px; color: var(--primary); text-decoration: none;
+  background: var(--primary-soft); padding: 4px 10px; border-radius: 999px;
+}
+
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  background: var(--card); border-radius: var(--radius);
+  padding: 14px; margin-bottom: 10px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.list .emoji { font-size: 22px; }
+.list .label { font-size: 12px; color: var(--muted); }
+.list .value { font-size: 15px; margin-top: 2px; overflow-wrap: anywhere; }
+.list a { color: var(--primary); }
+
+.check li { align-items: center; cursor: pointer; user-select: none; }
+.check input { width: 22px; height: 22px; accent-color: var(--primary); }
+.check li.checked span { text-decoration: line-through; color: var(--muted); }
+.progress { font-size: 14px; color: var(--muted); margin: -8px 0 12px; }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 560px;
+  display: flex; background: var(--card);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+.bottom-bar button {
+  flex: 1; border: 0; background: none; color: var(--muted);
+  padding: 8px 0 10px; font-size: 12px; cursor: pointer;
+}
+.bottom-bar button span { display: block; font-size: 20px; margin-bottom: 2px; }
+.bottom-bar button.active { color: var(--primary); font-weight: 700; }
