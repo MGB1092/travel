@@ -2,7 +2,7 @@
 // time: "HH:MM", type: flight | move | food | sight | stay | shop | etc
 // place 가 있으면 구글 지도 링크가 자동으로 붙습니다.
 window.TRIP = {
-  title: "도쿄 4박 5일",
+  title: "가을이네 가족 도쿄 4박5일 여행",
   subtitle: "가을 도쿄 산책 여행",
   startDate: "2026-10-08",
   endDate: "2026-10-12",

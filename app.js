@@ -191,6 +191,8 @@
 
   // 준비물 체크 상태는 브라우저에 저장
   const KEY = "trip-check:" + trip.title;
+  const OLD_KEY = "trip-check:도쿄 4박 5일"; // 제목 변경 전 체크 상태 이어받기
+  try { if (!localStorage.getItem(KEY) && localStorage.getItem(OLD_KEY)) localStorage.setItem(KEY, localStorage.getItem(OLD_KEY)); } catch {}
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
   const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
 
