@@ -89,7 +89,7 @@
 
     $("day-view").innerHTML = `
       <h2>Day ${current + 1} · ${esc(day.title)}<small>${fmtDate(day.date)}</small></h2>
-      ${weatherChip(day.date) ? `<p class="day-wx">${weatherChip(day.date)}</p>` : ""}
+      ${weatherChip(day.date) ? `<p class="day-wx">${weatherChip(day.date)}${trip.weather.link ? ` <a class="wx-link" href="${esc(trip.weather.link.url)}" target="_blank" rel="noopener">AccuWeather ↗</a>` : ""}</p>` : ""}
       <ol class="timeline">
         ${day.items.map((it, i) => `
           <li class="item ${isToday && i === nowIdx ? "now" : ""} ${isToday && i < nowIdx ? "done" : ""}">
@@ -116,7 +116,8 @@
             <span class="r">${w.rain != null ? "☔ " + w.rain + "%" : ""}</span></li>`;
         }).join("")}
       </ul>
-      <p class="progress">${Object.keys(forecast).length ? "실시간 예보(Open-Meteo) · " : ""}예보가 없는 날은 10월 평년값${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>` : ""}
+      <p class="progress">${Object.keys(forecast).length ? "실시간 예보(Open-Meteo) · " : ""}예보가 없는 날은 10월 평년값${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>
+      ${trip.weather.link ? `<a class="btn-link" href="${esc(trip.weather.link.url)}" target="_blank" rel="noopener">🌤️ ${esc(trip.weather.link.label)} ↗</a>` : ""}` : ""}
       <h2>여행 정보</h2>
       <ul class="list">
         ${trip.info.map((x) => `
