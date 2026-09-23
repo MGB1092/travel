@@ -64,6 +64,59 @@
       .catch(() => {}); // 오프라인 등 실패 시 평년값 유지
   }
 
+
+  // 환율: open.er-api.com → frankfurter.app 순서로 시도, 모두 실패하면 fallback
+  const fx = { rate: trip.exchange ? trip.exchange.fallback : null, source: "기본값", updated: null };
+  const won = (n) => Math.round(n).toLocaleString("ko-KR");
+  function renderFx() {
+    const X = trip.exchange;
+    if (!X) return;
+    $("fx-box").innerHTML = `
+      <h2>엔화 환율</h2>
+      <div class="fx-card">
+        <div class="fx-rate"><b id="fx-100"></b><span id="fx-meta"></span></div>
+        <label class="fx-conv">
+          <input id="fx-in" type="number" inputmode="numeric" min="0" placeholder="엔 금액 입력" value="1000">
+          <span>엔 =</span>
+          <b id="fx-out"></b>
+        </label>
+        <div class="fx-quick">${[500, 1000, 3000, 5000, 10000].map((v) => `<button data-yen="${v}">${v.toLocaleString()}¥</button>`).join("")}</div>
+      </div>
+      ${X.link ? `<a class="btn-link" href="${esc(X.link.url)}" target="_blank" rel="noopener">💴 ${esc(X.link.label)} ↗</a>` : ""}`;
+    $("fx-in").addEventListener("input", updateFx);
+    $("fx-box").querySelector(".fx-quick").addEventListener("click", (e) => {
+      const v = e.target.dataset.yen;
+      if (v) { $("fx-in").value = v; updateFx(); }
+    });
+    updateFx();
+  }
+  function updateFx() {
+    if (!$("fx-100")) return;
+    $("fx-100").textContent = `100엔 = ${(fx.rate * 100).toFixed(2)}원`;
+    $("fx-meta").textContent = fx.updated ? `${fx.source} · ${fx.updated} 기준` : "실시간 환율을 불러오지 못해 기본값 표시 중";
+    const yen = parseFloat($("fx-in").value) || 0;
+    $("fx-out").textContent = `${won(yen * fx.rate)}원`;
+  }
+  function loadFx() {
+    const X = trip.exchange;
+    if (!X) return;
+    const stamp = (d) => `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+    fetch(`https://open.er-api.com/v6/latest/${X.from}`)
+      .then((r) => r.json())
+      .then((j) => {
+        if (j.result !== "success" || !j.rates[X.to]) throw 0;
+        return { rate: j.rates[X.to], source: "ExchangeRate-API", updated: stamp(new Date(j.time_last_update_unix * 1000)) };
+      })
+      .catch(() => fetch(`https://api.frankfurter.app/latest?from=${X.from}&to=${X.to}`)
+        .then((r) => r.json())
+        .then((j) => {
+          if (!j.rates || !j.rates[X.to]) throw 0;
+          return { rate: j.rates[X.to], source: "유럽중앙은행(Frankfurter)", updated: j.date };
+        }))
+      .then((r) => { Object.assign(fx, r); updateFx(); })
+      .catch(() => {});
+  }
+
   // 일자 탭
   let current = Math.max(0, trip.days.findIndex((d) => d.date === today));
   const tabs = $("tabs");
@@ -105,7 +158,7 @@
   }
 
   function renderInfo() {
-    $("info-view").innerHTML = `
+    $("wx-box").innerHTML = `
       ${trip.weather ? `
       <h2>${esc(trip.weather.city)} 날씨</h2>
       <ul class="wx-list">
@@ -117,7 +170,8 @@
         }).join("")}
       </ul>
       <p class="progress">${Object.keys(forecast).length ? "실시간 예보(Open-Meteo) · " : ""}예보가 없는 날은 10월 평년값${trip.weather.normal?.note ? " · " + esc(trip.weather.normal.note) : ""}</p>
-      ${trip.weather.link ? `<a class="btn-link" href="${esc(trip.weather.link.url)}" target="_blank" rel="noopener">🌤️ ${esc(trip.weather.link.label)} ↗</a>` : ""}` : ""}
+      ${trip.weather.link ? `<a class="btn-link" href="${esc(trip.weather.link.url)}" target="_blank" rel="noopener">🌤️ ${esc(trip.weather.link.label)} ↗</a>` : ""}` : ""}`;
+    $("info-box").innerHTML = `
       <h2>여행 정보</h2>
       <ul class="list">
         ${trip.info.map((x) => `
@@ -179,5 +233,7 @@
   renderDay();
   renderInfo();
   renderCheck();
+  renderFx();
   loadForecast();
+  loadFx();
 })();

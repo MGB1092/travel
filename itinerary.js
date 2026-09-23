@@ -19,11 +19,16 @@ window.TRIP = {
     normal: { max: 22, min: 15, note: "비 오는 날 약 3일에 1번 · 얇은 겉옷 추천" }
   },
 
+  // 환율: 실시간(무료 API, 하루 1회 이상 갱신) 조회 실패 시 fallback 사용 (1엔당 원)
+  exchange: {
+    from: "JPY", to: "KRW", fallback: 9.0,
+    link: { label: "네이버 실시간 환율 보기", url: "https://search.naver.com/search.naver?query=%EC%97%94%ED%99%94+%ED%99%98%EC%9C%A8" }
+  },
+
   info: [
     { icon: "🛫", label: "가는 편 · 10/8(목)", value: "RF322 · 09:30 청주(CJJ) → 11:50 나리타(NRT) T3", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함" },
     { icon: "🛬", label: "오는 편 · 10/12(월)", value: "RF321 · 13:05 나리타(NRT) T3 → 15:30 청주(CJJ)", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함 · 시간은 현지 기준" },
     { icon: "🏨", label: "숙소", value: "신주쿠 그레이서리 호텔", place: "Hotel Gracery Shinjuku" },
-    { icon: "💴", label: "환율 메모", value: "100엔 ≈ 900원" },
     { icon: "🚨", label: "긴급 연락처", value: "주일 한국대사관 +81-3-3455-2601", tel: "+81334552601" }
   ],
 
