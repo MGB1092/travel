@@ -101,6 +101,13 @@ window.TRIP = {
     path: "trips/gaeul-tokyo-2026/checklist"
   },
 
+  // 전리품(사 올 것) 목록 · 준비물과 같은 방식으로 가족 공유
+  // (Firebase 보안 규칙 trips/$trip/checklist 에 맞춘 경로)
+  loot: {
+    path: "trips/gaeul-tokyo-2026-loot/checklist",
+    items: ["위스키", "지숙이 가방", "가을이 옷"]
+  },
+
   checklist: [
     "여권", "항공권 e-티켓", "Visit Japan Web 등록 (가족 모두 · QR 캡처)", "엔화 / 트래블 카드", "eSIM 또는 포켓와이파이",
     "돼지코 어댑터", "보조배터리", "여행자 보험", "상비약"

@@ -240,25 +240,11 @@
       ${trip.members?.length ? `<p class="progress">함께하는 사람: ${trip.members.map(esc).join(", ")}</p>` : ""}`;
   }
 
-  // 준비물 체크 상태
+  // 체크리스트 (준비물 · 전리품 공용)
   // - trip.shared.dbUrl 이 있으면 Firebase Realtime Database(REST + 실시간 스트림)로 모두와 공유
   // - 없거나 연결 실패 시 이 기기(localStorage)에만 저장
-  const KEY = "trip-check:" + trip.title;
-  const OLD_KEY = "trip-check:도쿄 4박 5일"; // 제목 변경 전 체크 상태 이어받기
-  try { if (!localStorage.getItem(KEY) && localStorage.getItem(OLD_KEY)) localStorage.setItem(KEY, localStorage.getItem(OLD_KEY)); } catch {}
-  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-  const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
-
   // Firebase 키에 쓸 수 없는 문자( . $ # [ ] / ) 치환
   const fbKey = (s) => s.replace(/[.$#[\]/]/g, "_");
-  const SHARED = trip.shared && trip.shared.dbUrl
-    ? `${trip.shared.dbUrl.replace(/\/+$/, "")}/${trip.shared.path}` : null;
-  let checks = {};          // fbKey -> boolean
-  let sync = SHARED ? "connecting" : "local";
-  // 로컬 캐시(항목 이름 기준)를 fbKey 기준으로 옮겨 담기
-  (() => { const l = load(); trip.checklist.forEach((c) => { if (l[c]) checks[fbKey(c)] = true; }); })();
-  const cache = () => { const o = {}; trip.checklist.forEach((c) => { if (checks[fbKey(c)]) o[c] = true; }); save(o); };
-
   const SYNC_TEXT = {
     local: "📱 이 기기에만 저장됩니다",
     connecting: "⏳ 공유 목록에 연결 중…",
@@ -266,61 +252,89 @@
     offline: "⚠️ 연결 끊김 · 다시 연결되면 공유됩니다"
   };
 
-  function renderCheck() {
-    const done = trip.checklist.filter((c) => checks[fbKey(c)]).length;
-    $("check-view").innerHTML = `
-      <h2>준비물</h2>
-      <p class="progress">${done} / ${trip.checklist.length} 완료</p>
-      <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
-      <ul class="list check">
-        ${trip.checklist.map((c) => {
-          const on = !!checks[fbKey(c)];
-          return `
-          <li class="${on ? "checked" : ""}" data-item="${esc(c)}">
-            <input type="checkbox" ${on ? "checked" : ""} tabindex="-1">
-            <span>${esc(c)}</span>
-          </li>`;
-        }).join("")}
-      </ul>`;
-  }
-  $("check-view").addEventListener("click", (e) => {
-    const li = e.target.closest("li[data-item]");
-    if (!li) return;
-    const k = fbKey(li.dataset.item);
-    const next = !checks[k];
-    checks[k] = next;
-    cache();
-    renderCheck();
-    if (SHARED) {
-      fetch(`${SHARED}/${encodeURIComponent(k)}.json`, { method: "PUT", body: JSON.stringify(next) })
-        .then((r) => { if (!r.ok) throw r.status; })
-        .catch(() => { sync = "offline"; renderCheck(); });
-    }
-  });
+  function makeChecklist({ viewId, title, items, path, storeKey, oldStoreKey }) {
+    const view = $(viewId);
+    const load = () => { try { return JSON.parse(localStorage.getItem(storeKey)) || {}; } catch { return {}; } };
+    const save = (v) => { try { localStorage.setItem(storeKey, JSON.stringify(v)); } catch {} };
+    if (oldStoreKey) try { if (!localStorage.getItem(storeKey) && localStorage.getItem(oldStoreKey)) localStorage.setItem(storeKey, localStorage.getItem(oldStoreKey)); } catch {}
 
-  function applyServer(path, data, merge) {
-    if (path === "/") {
-      if (merge) Object.assign(checks, data || {});
-      else checks = data && typeof data === "object" ? { ...data } : {};
-    } else {
-      const k = decodeURIComponent(path.slice(1).split("/")[0]);
-      checks[k] = data;
+    const SHARED = trip.shared && trip.shared.dbUrl && path ? `${trip.shared.dbUrl.replace(/\/+$/, "")}/${path}` : null;
+    let checks = {};          // fbKey -> boolean
+    let sync = SHARED ? "connecting" : "local";
+    // 로컬 캐시(항목 이름 기준)를 fbKey 기준으로 옮겨 담기
+    (() => { const l = load(); items.forEach((c) => { if (l[c]) checks[fbKey(c)] = true; }); })();
+    const cache = () => { const o = {}; items.forEach((c) => { if (checks[fbKey(c)]) o[c] = true; }); save(o); };
+
+    function render() {
+      const done = items.filter((c) => checks[fbKey(c)]).length;
+      view.innerHTML = `
+        <h2>${esc(title)}</h2>
+        <p class="progress">${done} / ${items.length} 완료</p>
+        <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
+        <ul class="list check">
+          ${items.map((c) => {
+            const on = !!checks[fbKey(c)];
+            return `
+            <li class="${on ? "checked" : ""}" data-item="${esc(c)}">
+              <input type="checkbox" ${on ? "checked" : ""} tabindex="-1">
+              <span>${esc(c)}</span>
+            </li>`;
+          }).join("")}
+        </ul>`;
     }
-    Object.keys(checks).forEach((k) => { if (checks[k] == null) delete checks[k]; });
-    cache();
-    renderCheck();
+    view.addEventListener("click", (e) => {
+      const li = e.target.closest("li[data-item]");
+      if (!li) return;
+      const k = fbKey(li.dataset.item);
+      const next = !checks[k];
+      checks[k] = next;
+      cache();
+      render();
+      if (SHARED) {
+        fetch(`${SHARED}/${encodeURIComponent(k)}.json`, { method: "PUT", body: JSON.stringify(next) })
+          .then((r) => { if (!r.ok) throw r.status; })
+          .catch(() => { sync = "offline"; render(); });
+      }
+    });
+
+    function applyServer(p, data, merge) {
+      if (p === "/") {
+        if (merge) Object.assign(checks, data || {});
+        else checks = data && typeof data === "object" ? { ...data } : {};
+      } else {
+        checks[decodeURIComponent(p.slice(1).split("/")[0])] = data;
+      }
+      Object.keys(checks).forEach((k) => { if (checks[k] == null) delete checks[k]; });
+      cache();
+      render();
+    }
+    function connect() {
+      if (!SHARED || !window.EventSource) return;
+      const es = new EventSource(`${SHARED}.json`);
+      const onData = (merge) => (ev) => {
+        try { const m = JSON.parse(ev.data); sync = "live"; applyServer(m.path, m.data, merge); } catch {}
+      };
+      es.addEventListener("put", onData(false));
+      es.addEventListener("patch", onData(true));
+      es.addEventListener("cancel", () => { sync = "offline"; render(); });
+      es.onerror = () => { if (sync !== "offline") { sync = "offline"; render(); } };  // EventSource가 자동 재연결
+    }
+    return { render, connect };
   }
-  function connectShared() {
-    if (!SHARED || !window.EventSource) return;
-    const es = new EventSource(`${SHARED}.json`);
-    const onData = (merge) => (ev) => {
-      try { const m = JSON.parse(ev.data); sync = "live"; applyServer(m.path, m.data, merge); } catch {}
-    };
-    es.addEventListener("put", onData(false));
-    es.addEventListener("patch", onData(true));
-    es.addEventListener("cancel", () => { sync = "offline"; renderCheck(); });
-    es.onerror = () => { if (sync !== "offline") { sync = "offline"; renderCheck(); } };  // EventSource가 자동 재연결
-  }
+
+  const lists = [
+    makeChecklist({
+      viewId: "check-view", title: "준비물", items: trip.checklist,
+      path: trip.shared && trip.shared.path,
+      storeKey: "trip-check:" + trip.title,
+      oldStoreKey: "trip-check:도쿄 4박 5일"   // 제목 변경 전 체크 상태 이어받기
+    }),
+    trip.loot && makeChecklist({
+      viewId: "loot-view", title: "전리품", items: trip.loot.items,
+      path: trip.loot.path,
+      storeKey: "trip-loot:" + trip.title
+    })
+  ].filter(Boolean);
 
   // 하단 메뉴
   document.querySelectorAll(".bottom-bar button").forEach((btn) => {
@@ -330,6 +344,7 @@
       $("day-view").hidden = v !== "day";
       $("info-view").hidden = v !== "info";
       $("check-view").hidden = v !== "check";
+      $("loot-view").hidden = v !== "loot";
       tabs.hidden = v !== "day";
       window.scrollTo(0, 0);
     });
@@ -337,10 +352,10 @@
 
   renderDay();
   renderInfo();
-  renderCheck();
+  lists.forEach((l) => l.render());
   renderFx();
   loadForecast();
   loadClimate();
   loadFx();
-  connectShared();
+  lists.forEach((l) => l.connect());
 })();
