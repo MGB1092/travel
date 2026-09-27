@@ -263,7 +263,7 @@
     return url;
   }
 
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap }) {
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
@@ -286,8 +286,10 @@
         <p class="progress">${done} / ${items.length} 완료</p>
         <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
         ${allOnMap && placed.length > 1 ? `
-        <a class="btn-link" href="${multiMapUrl(placed.map((c) => c.place))}" target="_blank" rel="noopener">🗺️ 구글 지도에서 ${Math.min(placed.length, MAX_STOPS)}곳 한 번에 보기 ↗</a>
-        ${placed.length > MAX_STOPS ? `<p class="progress">구글 지도 제한으로 위에서부터 ${MAX_STOPS}곳만 표시돼요</p>` : ""}` : ""}
+        ${myMapUrl
+          ? `<a class="btn-link" href="${esc(myMapUrl)}" target="_blank" rel="noopener">🗺️ 우리 가족 맛집 지도 (내 지도) 보기 ↗</a>`
+          : `<a class="btn-link" href="${multiMapUrl(placed.map((c) => c.place))}" target="_blank" rel="noopener">🗺️ 구글 지도에서 ${Math.min(placed.length, MAX_STOPS)}곳 한 번에 보기 ↗</a>
+        ${placed.length > MAX_STOPS ? `<p class="progress">구글 지도 제한으로 위에서부터 ${MAX_STOPS}곳만 표시돼요</p>` : ""}`}` : ""}
         <ul class="list check">
           ${entries.map((c) => {
             const on = !!checks[fbKey(c.name)];
@@ -360,7 +362,8 @@
       viewId: "food-view", title: "음식", items: trip.food.items,
       path: trip.food.path,
       storeKey: "trip-food:" + trip.title,
-      allOnMap: true
+      allOnMap: true,
+      myMapUrl: trip.food.myMapUrl
     })
   ].filter(Boolean);
 

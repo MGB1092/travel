@@ -122,6 +122,8 @@ window.TRIP = {
   // 먹어 볼 음식 목록 · 가족 공유
   food: {
     path: "trips/gaeul-tokyo-2026-food/checklist",
+    // 구글 "내 지도" 공유 링크를 넣으면 '한 번에 보기' 버튼이 이 지도로 연결됩니다 (maps/food.csv 가져오기용)
+    myMapUrl: "",
     items: [
       { name: "Aigre Douce (에그르 두스) 🍰", place: "Aigre Douce, 3-22-13 Shimoochiai, Shinjuku City, Tokyo",
         memo: "프렌치 파티세리 · ★4.4 · 신주쿠구 시모오치아이 3-22-13 · 11:00 오픈 (휴무일 확인)" },
