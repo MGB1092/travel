@@ -52,14 +52,17 @@ window.TRIP = {
     },
     {
       date: "2026-10-09",
-      title: "아사쿠사 & 스카이트리",
+      title: "도쿄 디즈니랜드 🏰",
       items: [
-        { time: "08:30", type: "move", title: "호텔 → 아사쿠사", memo: "마이하마역에서 JR 게이요선 · 약 1시간" },
-        { time: "09:30", type: "sight", title: "센소지", place: "Senso-ji" },
-        { time: "11:00", type: "shop", title: "나카미세 거리 간식", place: "Nakamise Shopping Street" },
-        { time: "12:30", type: "food", title: "점심 · 텐동", place: "Tendon Masaru Asakusa" },
-        { time: "14:30", type: "sight", title: "스카이트리 전망대", place: "Tokyo Skytree", memo: "온라인 예매 추천" },
-        { time: "19:00", type: "food", title: "저녁 · 몬자야키", place: "Tsukishima Monja Street" }
+        { time: "07:30", type: "food", title: "호텔 조식", place: "Hotel Okura Tokyo Bay" },
+        { time: "08:15", type: "move", title: "디즈니 리조트 라인 → 도쿄 디즈니랜드 스테이션", place: "Bayside Station", memo: "호텔 옆 베이사이드역 · 모노레일 프리패스 있으면 편리" },
+        { time: "08:30", type: "sight", title: "입장 대기", place: "Tokyo Disneyland", memo: "개장 시간은 공식 앱에서 확인" },
+        { time: "09:00", type: "sight", title: "입장 · 인기 어트랙션부터", memo: "공식 앱으로 대기시간 확인 · 필요하면 프리미어 액세스" },
+        { time: "12:00", type: "food", title: "점심 · 파크 안 레스토랑", memo: "모바일 오더 이용하면 줄이 짧아요" },
+        { time: "14:00", type: "sight", title: "낮 퍼레이드", memo: "공연 시간은 앱에서 확인 · 30분 전 자리 잡기" },
+        { time: "18:00", type: "food", title: "저녁 · 파크 안" },
+        { time: "19:30", type: "sight", title: "야간 퍼레이드 · 일렉트리컬 퍼레이드 드림라이츠", memo: "시간은 앱에서 확인" },
+        { time: "21:00", type: "move", title: "폐장 후 호텔로", memo: "디즈니 리조트 라인 → 베이사이드역" }
       ]
     },
     {
@@ -113,7 +116,7 @@ window.TRIP = {
   },
 
   checklist: [
-    "여권", "항공권 e-티켓", "Visit Japan Web 등록 (가족 모두 · QR 캡처)", "엔화 / 트래블 카드", "eSIM 또는 포켓와이파이",
+    "여권", "항공권 e-티켓", "디즈니랜드 티켓 (10/9 날짜 지정) · 공식 앱 설치", "Visit Japan Web 등록 (가족 모두 · QR 캡처)", "엔화 / 트래블 카드", "eSIM 또는 포켓와이파이",
     "돼지코 어댑터", "보조배터리", "여행자 보험", "상비약"
   ]
 };
