@@ -9,7 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
-  <link rel="stylesheet" href="style.css">
+  <!-- 브라우저 캐시 때문에 새 화면 + 예전 스크립트가 섞이지 않도록 항상 최신 파일을 받음 -->
+  <script>window.V = Date.now();</script>
+  <script>document.write('<link rel="stylesheet" href="style.css?v=' + V + '">');</script>
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body>
   <header class="hero">
@@ -55,7 +58,9 @@
     <a class="bar-link" href="https://services.digital.go.jp/ko/visit-japan-web/" target="_blank" rel="noopener"><span>🛂</span>V/J</a>
   </nav>
 
-  <script src="itinerary.js"></script>
-  <script src="app.js"></script>
+  <script>
+    document.write('<script src="itinerary.js?v=' + V + '"><\/script>' +
+                   '<script src="app.js?v=' + V + '"><\/script>');
+  </script>
 </body>
 </html>
