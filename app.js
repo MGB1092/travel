@@ -253,10 +253,21 @@
   };
 
   // items: "이름" 또는 { name, place, memo } (place 가 있으면 구글 지도 버튼)
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey }) {
+  // 여러 장소를 한 번에: 구글 지도 경로 링크 (출발 · 경유지 · 도착 → 지도에 A, B, C… 로 표시)
+  // 모바일 구글 지도는 경유지가 최대 3개라 한 번에 5곳까지
+  const MAX_STOPS = 5;
+  function multiMapUrl(places) {
+    const p = places.slice(0, MAX_STOPS).map(encodeURIComponent);
+    let url = `https://www.google.com/maps/dir/?api=1&origin=${p[0]}&destination=${p[p.length - 1]}`;
+    if (p.length > 2) url += `&waypoints=${p.slice(1, -1).join("%7C")}`;
+    return url;
+  }
+
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
+    const placed = entries.filter((c) => c.place);
     const load = () => { try { return JSON.parse(localStorage.getItem(storeKey)) || {}; } catch { return {}; } };
     const save = (v) => { try { localStorage.setItem(storeKey, JSON.stringify(v)); } catch {} };
     if (oldStoreKey) try { if (!localStorage.getItem(storeKey) && localStorage.getItem(oldStoreKey)) localStorage.setItem(storeKey, localStorage.getItem(oldStoreKey)); } catch {}
@@ -274,6 +285,9 @@
         <h2>${esc(title)}</h2>
         <p class="progress">${done} / ${items.length} 완료</p>
         <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
+        ${allOnMap && placed.length > 1 ? `
+        <a class="btn-link" href="${multiMapUrl(placed.map((c) => c.place))}" target="_blank" rel="noopener">🗺️ 구글 지도에서 ${Math.min(placed.length, MAX_STOPS)}곳 한 번에 보기 ↗</a>
+        ${placed.length > MAX_STOPS ? `<p class="progress">구글 지도 제한으로 위에서부터 ${MAX_STOPS}곳만 표시돼요</p>` : ""}` : ""}
         <ul class="list check">
           ${entries.map((c) => {
             const on = !!checks[fbKey(c.name)];
@@ -345,7 +359,8 @@
     trip.food && makeChecklist({
       viewId: "food-view", title: "음식", items: trip.food.items,
       path: trip.food.path,
-      storeKey: "trip-food:" + trip.title
+      storeKey: "trip-food:" + trip.title,
+      allOnMap: true
     })
   ].filter(Boolean);
 
