@@ -125,8 +125,6 @@ window.TRIP = {
     items: [
       { name: "Aigre Douce (에그르 두스) 🍰", place: "Aigre Douce, 3-22-13 Shimoochiai, Shinjuku City, Tokyo",
         memo: "프렌치 파티세리 · ★4.4 · 신주쿠구 시모오치아이 3-22-13 · 11:00 오픈 (휴무일 확인)" },
-      { name: "Suage+ 수프카레 🍛", place: "Suage+ Soup Curry, Minami 4 Jonishi 5-6-1, Chuo Ward, Sapporo",
-        memo: "수프카레 · ★4.3 · ¥1,000–2,000 · 예약 불가 · 21:00까지 · ⚠️ 저장된 주소는 삿포로(홋카이도) 매장" },
       "스시 (회전초밥)", "라멘", "규카츠", "텐동", "야키토리", "몬자야키",
       "시라스동 (가마쿠라)", "디즈니 추로스 & 팝콘", "편의점 디저트 · 에그샌드", "멜론빵"
     ]
