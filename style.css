@@ -265,3 +265,11 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
 .hero.has-photo .dday,
 .hero.has-photo h1 { margin-right: 118px; }
 .wx-list .l small { display: block; font-size: 11px; color: var(--now); }
+.check .ck-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.check .ck-body small { font-size: 12px; color: var(--muted); }
+.check .ck-body .map {
+  align-self: flex-start; margin-top: 6px; font-size: 13px; text-decoration: none;
+  color: var(--primary); background: var(--primary-soft); padding: 4px 10px; border-radius: 999px;
+}
+.check li.checked .ck-body small { text-decoration: none; }
+.check input { flex: 0 0 22px; }

@@ -252,8 +252,11 @@
     offline: "⚠️ 연결 끊김 · 다시 연결되면 공유됩니다"
   };
 
-  function makeChecklist({ viewId, title, items, path, storeKey, oldStoreKey }) {
+  // items: "이름" 또는 { name, place, memo } (place 가 있으면 구글 지도 버튼)
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey }) {
     const view = $(viewId);
+    const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
+    const items = entries.map((c) => c.name);
     const load = () => { try { return JSON.parse(localStorage.getItem(storeKey)) || {}; } catch { return {}; } };
     const save = (v) => { try { localStorage.setItem(storeKey, JSON.stringify(v)); } catch {} };
     if (oldStoreKey) try { if (!localStorage.getItem(storeKey) && localStorage.getItem(oldStoreKey)) localStorage.setItem(storeKey, localStorage.getItem(oldStoreKey)); } catch {}
@@ -272,17 +275,22 @@
         <p class="progress">${done} / ${items.length} 완료</p>
         <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
         <ul class="list check">
-          ${items.map((c) => {
-            const on = !!checks[fbKey(c)];
+          ${entries.map((c) => {
+            const on = !!checks[fbKey(c.name)];
             return `
-            <li class="${on ? "checked" : ""}" data-item="${esc(c)}">
+            <li class="${on ? "checked" : ""}" data-item="${esc(c.name)}">
               <input type="checkbox" ${on ? "checked" : ""} tabindex="-1">
-              <span>${esc(c)}</span>
+              <div class="ck-body">
+                <span>${esc(c.name)}</span>
+                ${c.memo ? `<small>${esc(c.memo)}</small>` : ""}
+                ${c.place ? `<a class="map" href="${mapUrl(c.place)}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
+              </div>
             </li>`;
           }).join("")}
         </ul>`;
     }
     view.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return;   // 지도 링크는 체크하지 않음
       const li = e.target.closest("li[data-item]");
       if (!li) return;
       const k = fbKey(li.dataset.item);
@@ -333,6 +341,11 @@
       viewId: "loot-view", title: "전리품", items: trip.loot.items,
       path: trip.loot.path,
       storeKey: "trip-loot:" + trip.title
+    }),
+    trip.food && makeChecklist({
+      viewId: "food-view", title: "음식", items: trip.food.items,
+      path: trip.food.path,
+      storeKey: "trip-food:" + trip.title
     })
   ].filter(Boolean);
 
@@ -341,10 +354,7 @@
     btn.addEventListener("click", () => {
       const v = btn.dataset.view;
       document.querySelectorAll(".bottom-bar button").forEach((b) => b.classList.toggle("active", b === btn));
-      $("day-view").hidden = v !== "day";
-      $("info-view").hidden = v !== "info";
-      $("check-view").hidden = v !== "check";
-      $("loot-view").hidden = v !== "loot";
+      document.querySelectorAll("main > section").forEach((s) => { s.hidden = s.id !== v + "-view"; });
       tabs.hidden = v !== "day";
       window.scrollTo(0, 0);
     });
