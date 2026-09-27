@@ -31,7 +31,8 @@ window.TRIP = {
     { icon: "🛬", label: "오는 편 · 10/12(월)", value: "RF321 · 13:05 나리타(NRT) T3 → 15:30 청주(CJJ)", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함 · 시간은 현지 기준" },
     { icon: "🏨", label: "숙소 · 10/8(목)~10/10(토) 2박", value: "호텔 오쿠라 도쿄 베이 ★5", place: "Hotel Okura Tokyo Bay", tel: "+81473553344",
       memo: "치바현 우라야스시 마이하마 1-8 · 체크인 15:00부터 · 체크아웃 12:00까지 · ☎ +81 47-355-3344" },
-    { icon: "🏨", label: "숙소 · 10/10(토)~10/12(월) 2박", value: "미정 (예약하면 알려주세요)" },
+    { icon: "🏠", label: "숙소 · 10/10(토)~10/12(월) 2박", value: "시부야 아파트 (Shibuya Crossing 5mins walk COZY BRIGHT COMFY PAD 35sqm)", place: "2-20-26 Dogenzaka, Shibuya, Tokyo",
+      memo: "도쿄도 시부야구 도겐자카 2-20-26 · 체크인 16:00~24:00 · 체크아웃 11:00까지 · 출입 방법은 예약 앱의 '체크인 안내' 확인" },
     { icon: "🚨", label: "긴급 연락처", value: "주일 한국대사관 +81-3-3455-2601", tel: "+81334552601" }
   ],
 
@@ -67,13 +68,15 @@ window.TRIP = {
     },
     {
       date: "2026-10-10",
-      title: "체크아웃 & 시부야",
+      title: "시부야로 이동",
       items: [
-        { time: "11:30", type: "stay", title: "호텔 오쿠라 도쿄 베이 체크아웃", place: "Hotel Okura Tokyo Bay", memo: "체크아웃 12:00까지 · 다음 숙소로 짐 이동" },
-        { time: "13:00", type: "stay", title: "다음 숙소에 짐 맡기기", memo: "숙소 미정" },
+        { time: "11:30", type: "stay", title: "호텔 오쿠라 도쿄 베이 체크아웃", place: "Hotel Okura Tokyo Bay", memo: "체크아웃 12:00까지" },
+        { time: "12:00", type: "move", title: "마이하마 → 시부야", memo: "JR 게이요선 · 도쿄역 환승 · 약 1시간" },
+        { time: "13:00", type: "stay", title: "시부야역 코인로커에 짐 보관", place: "Shibuya Station", memo: "숙소 체크인이 16:00부터라 짐은 역에 · 큰 캐리어는 짐 보관 서비스 예약 추천" },
         { time: "14:00", type: "sight", title: "메이지 신궁", place: "Meiji Jingu" },
         { time: "15:00", type: "shop", title: "다케시타 거리", place: "Takeshita Street" },
         { time: "16:30", type: "sight", title: "시부야 스카이", place: "Shibuya Sky", memo: "일몰 시간대 예약 추천" },
+        { time: "18:00", type: "stay", title: "짐 찾아서 숙소 체크인", place: "2-20-26 Dogenzaka, Shibuya, Tokyo", memo: "시부야 스크램블 교차로에서 도보 5분 · 체크인 16:00~24:00" },
         { time: "19:00", type: "food", title: "저녁 · 야키토리", place: "Nonbei Yokocho Shibuya" }
       ]
     },
@@ -81,20 +84,21 @@ window.TRIP = {
       date: "2026-10-11",
       title: "가마쿠라 당일치기",
       items: [
-        { time: "09:00", type: "move", title: "숙소 → 가마쿠라", memo: "신주쿠 기준 JR 쇼난신주쿠 라인 약 1시간" },
+        { time: "09:00", type: "move", title: "시부야 → 가마쿠라", place: "Shibuya Station", memo: "JR 쇼난신주쿠 라인 · 약 1시간" },
         { time: "10:30", type: "sight", title: "쓰루가오카 하치만구", place: "Tsurugaoka Hachimangu" },
         { time: "12:00", type: "food", title: "점심 · 시라스동", place: "Komachi-dori Kamakura" },
         { time: "13:30", type: "sight", title: "가마쿠라 대불", place: "Kotoku-in" },
         { time: "15:30", type: "sight", title: "에노덴 타고 가마쿠라코코마에 바다", place: "Kamakurakokomae Station" },
-        { time: "19:30", type: "food", title: "저녁 · 신주쿠 이자카야", place: "Shinjuku" }
+        { time: "19:30", type: "food", title: "저녁 · 시부야 이자카야", place: "Shibuya" }
       ]
     },
     {
       date: "2026-10-12",
       title: "귀국",
       items: [
-        { time: "08:00", type: "food", title: "아침 · 호텔 근처 편의점/카페" },
-        { time: "09:00", type: "stay", title: "체크아웃 후 공항으로", memo: "숙소 → 나리타 약 1시간 30분" },
+        { time: "08:00", type: "food", title: "아침 · 숙소 근처 편의점/카페" },
+        { time: "08:45", type: "stay", title: "숙소 체크아웃", memo: "체크아웃 11:00까지" },
+        { time: "09:15", type: "move", title: "나리타 익스프레스(N'EX) · 시부야 → 나리타", place: "Shibuya Station", memo: "약 1시간 20분 · 공항 제2터미널역에서 T3까지 도보 약 15분 · 열차 시간은 예약 내역 확인" },
         { time: "11:00", type: "move", title: "나리타 T3 도착 · 탑승 수속", place: "Narita Airport Terminal 3", memo: "기내식 없으니 공항 푸드코트에서 점심" },
         { time: "13:05", type: "flight", title: "RF321 나리타 출발", memo: "에어로케이항공 · A320" },
         { time: "15:30", type: "flight", title: "청주국제공항 도착", memo: "한국 시간" }
