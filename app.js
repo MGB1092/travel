@@ -236,8 +236,7 @@
               ${x.tel ? `<a href="tel:${esc(x.tel)}">📞 전화 걸기</a>` : ""}
             </div>
           </li>`).join("")}
-      </ul>
-      ${trip.members?.length ? `<p class="progress">함께하는 사람: ${trip.members.map(esc).join(", ")}</p>` : ""}`;
+      </ul>`;
   }
 
   // 체크리스트 (준비물 · 전리품 공용)

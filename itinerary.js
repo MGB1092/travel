@@ -7,7 +7,6 @@ window.TRIP = {
   photo: "images/family.jpg",   // 상단 사진 (지우면 사진 없이 표시)
   startDate: "2026-10-08",
   endDate: "2026-10-12",
-  members: ["나", "친구"],
 
   // 날씨: 예보(약 16일 이내)가 있으면 실시간 예보, 없으면 평년 기후값을 보여줍니다.
   weather: {
