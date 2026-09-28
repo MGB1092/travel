@@ -263,7 +263,7 @@
     return url;
   }
 
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath }) {
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath, reviewers }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
@@ -287,16 +287,24 @@
     let rsync = RSHARED ? "connecting" : "local";   // live | denied | offline | local
     let editing = null, draft = "", focusEdit = false;
 
+    // 사람별 한 줄: 저장 키는 "항목키__이름" (예: Aigre…__지숙)
+    const REVIEWERS = reviewers && reviewers.length ? reviewers : [null];
+    const rk = (k, who) => (who ? `${k}__${fbKey(who)}` : k);
     function reviewHtml(k) {
       if (!reviewsPath) return "";
-      if (editing === k) return `
-        <div class="review-area review-edit">
-          <input class="review-in" maxlength="100" placeholder="한줄평 (100자까지)" value="${esc(draft)}">
-          <button data-act="save">저장</button><button data-act="cancel" class="ghost">취소</button>
-        </div>`;
-      return reviews[k]
-        ? `<div class="review-area"><p class="review">💬 ${esc(reviews[k])}</p><button data-act="edit" class="ghost">✏️ 수정</button></div>`
-        : `<div class="review-area"><button data-act="edit" class="review-add">💬 한줄평 쓰기</button></div>`;
+      return `<div class="review-area">${REVIEWERS.map((who) => {
+        const key = rk(k, who);
+        const label = who ? `<b class="who">${esc(who)}</b>` : "";
+        const wattr = who ? ` data-who="${esc(who)}"` : "";
+        if (editing === key) return `
+          <div class="review-row review-edit"${wattr}>${label}
+            <input class="review-in" maxlength="100" placeholder="${who ? esc(who) + "의 " : ""}한줄평 (100자까지)" value="${esc(draft)}">
+            <button data-act="save">저장</button><button data-act="cancel" class="ghost">취소</button>
+          </div>`;
+        return reviews[key]
+          ? `<div class="review-row"${wattr}>${label}<p class="review">💬 ${esc(reviews[key])}</p><button data-act="edit" class="ghost" aria-label="수정">✏️</button></div>`
+          : `<div class="review-row"${wattr}>${label}<button data-act="edit" class="review-add">💬 한줄평 쓰기</button></div>`;
+      }).join("")}</div>`;
     }
     function saveReview(k, text) {
       text = text.trim().slice(0, 100);
@@ -354,10 +362,10 @@
       if (!li) return;
       if (e.target.closest(".review-area")) {   // 한줄평 영역은 체크하지 않음
         const act = e.target.closest("button[data-act]")?.dataset.act;
-        const k = fbKey(li.dataset.item);
-        if (act === "edit") { editing = k; draft = reviews[k] || ""; focusEdit = true; render(); }
+        const key = rk(fbKey(li.dataset.item), e.target.closest(".review-row")?.dataset.who || null);
+        if (act === "edit") { editing = key; draft = reviews[key] || ""; focusEdit = true; render(); }
         else if (act === "cancel") { editing = null; render(); }
-        else if (act === "save") saveReview(k, draft);
+        else if (act === "save") saveReview(key, draft);
         return;
       }
       const k = fbKey(li.dataset.item);
@@ -429,6 +437,7 @@
       path: trip.food.path,
       storeKey: "trip-food:" + trip.title,
       reviewsPath: trip.food.reviewsPath,
+      reviewers: trip.food.reviewers,
       allOnMap: true,
       myMapUrl: trip.food.myMapUrl
     })

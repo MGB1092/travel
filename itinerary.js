@@ -123,6 +123,7 @@ window.TRIP = {
   food: {
     path: "trips/gaeul-tokyo-2026-food/checklist",
     reviewsPath: "trips/gaeul-tokyo-2026-food/reviews",   // 식당별 한줄평 (Firebase 규칙에 reviews 허용 필요)
+    reviewers: ["지숙", "성민"],   // 한줄평 쓰는 사람 (순서대로 한 줄씩)
     // 구글 "내 지도" 공유 링크를 넣으면 '한 번에 보기' 버튼이 이 지도로 연결됩니다 (maps/food.csv 가져오기용)
     myMapUrl: "https://www.google.com/maps/d/viewer?mid=1rR5zbNyqZDSh_iP17IfdCnWubDckUNw",
     items: [
