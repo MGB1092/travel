@@ -263,7 +263,7 @@
     return url;
   }
 
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl }) {
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
@@ -279,12 +279,46 @@
     (() => { const l = load(); items.forEach((c) => { if (l[c]) checks[fbKey(c)] = true; }); })();
     const cache = () => { const o = {}; items.forEach((c) => { if (checks[fbKey(c)]) o[c] = true; }); save(o); };
 
+    // 한줄평 (항목별 한 줄, 가족 공유) · fbKey -> 문자열
+    const RSHARED = SHARED && reviewsPath ? `${trip.shared.dbUrl.replace(/\/+$/, "")}/${reviewsPath}` : null;
+    const rKey = storeKey + ":reviews";
+    let reviews = (() => { try { return JSON.parse(localStorage.getItem(rKey)) || {}; } catch { return {}; } })();
+    const cacheReviews = () => { try { localStorage.setItem(rKey, JSON.stringify(reviews)); } catch {} };
+    let rsync = RSHARED ? "connecting" : "local";   // live | denied | offline | local
+    let editing = null, draft = "", focusEdit = false;
+
+    function reviewHtml(k) {
+      if (!reviewsPath) return "";
+      if (editing === k) return `
+        <div class="review-area review-edit">
+          <input class="review-in" maxlength="100" placeholder="한줄평 (100자까지)" value="${esc(draft)}">
+          <button data-act="save">저장</button><button data-act="cancel" class="ghost">취소</button>
+        </div>`;
+      return reviews[k]
+        ? `<div class="review-area"><p class="review">💬 ${esc(reviews[k])}</p><button data-act="edit" class="ghost">✏️ 수정</button></div>`
+        : `<div class="review-area"><button data-act="edit" class="review-add">💬 한줄평 쓰기</button></div>`;
+    }
+    function saveReview(k, text) {
+      text = text.trim().slice(0, 100);
+      if (text) reviews[k] = text; else delete reviews[k];
+      cacheReviews();
+      editing = null;
+      render();
+      if (RSHARED) {
+        fetch(`${RSHARED}/${encodeURIComponent(k)}.json`, text ? { method: "PUT", body: JSON.stringify(text) } : { method: "DELETE" })
+          .then((r) => { if (r.status === 401 || r.status === 403) throw "denied"; if (!r.ok) throw r.status; })
+          .catch((err) => { rsync = err === "denied" ? "denied" : "offline"; render(); });
+      }
+    }
+
     function render() {
+      const hadFocus = document.activeElement && view.contains(document.activeElement) && document.activeElement.classList.contains("review-in");
       const done = items.filter((c) => checks[fbKey(c)]).length;
       view.innerHTML = `
         <h2>${esc(title)}</h2>
         <p class="progress">${done} / ${items.length} 완료</p>
         <p class="sync sync-${sync}">${SYNC_TEXT[sync]}</p>
+        ${reviewsPath && rsync === "denied" ? `<p class="sync sync-offline">⚠️ 한줄평은 아직 이 기기에만 저장돼요 (Firebase 규칙 업데이트 필요)</p>` : ""}
         ${allOnMap && placed.length > 1 ? `
         ${myMapUrl
           ? `<a class="btn-link" href="${esc(myMapUrl)}" target="_blank" rel="noopener">🗺️ 우리 가족 맛집 지도 (내 지도) 보기 ↗</a>`
@@ -300,15 +334,32 @@
                 <span>${esc(c.name)}</span>
                 ${c.memo ? `<small>${esc(c.memo)}</small>` : ""}
                 ${c.place ? `<a class="map" href="${mapUrl(c.place)}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
+                ${reviewHtml(fbKey(c.name))}
               </div>
             </li>`;
           }).join("")}
         </ul>`;
+      const inp = view.querySelector(".review-in");
+      if (inp && (focusEdit || hadFocus)) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); focusEdit = false; }
     }
+    view.addEventListener("input", (e) => { if (e.target.classList.contains("review-in")) draft = e.target.value; });
+    view.addEventListener("keydown", (e) => {
+      if (!e.target.classList.contains("review-in")) return;
+      if (e.key === "Enter" && !e.isComposing) { e.preventDefault(); saveReview(editing, draft); }
+      if (e.key === "Escape") { editing = null; render(); }
+    });
     view.addEventListener("click", (e) => {
       if (e.target.closest("a")) return;   // 지도 링크는 체크하지 않음
       const li = e.target.closest("li[data-item]");
       if (!li) return;
+      if (e.target.closest(".review-area")) {   // 한줄평 영역은 체크하지 않음
+        const act = e.target.closest("button[data-act]")?.dataset.act;
+        const k = fbKey(li.dataset.item);
+        if (act === "edit") { editing = k; draft = reviews[k] || ""; focusEdit = true; render(); }
+        else if (act === "cancel") { editing = null; render(); }
+        else if (act === "save") saveReview(k, draft);
+        return;
+      }
       const k = fbKey(li.dataset.item);
       const next = !checks[k];
       checks[k] = next;
@@ -321,14 +372,19 @@
       }
     });
 
-    function applyServer(p, data, merge) {
+    // 서버에서 받은 변경을 맵(obj)에 반영하고 새 맵을 돌려줌
+    function applyTo(obj, p, data, merge) {
       if (p === "/") {
-        if (merge) Object.assign(checks, data || {});
-        else checks = data && typeof data === "object" ? { ...data } : {};
+        if (merge) Object.assign(obj, data || {});
+        else obj = data && typeof data === "object" ? { ...data } : {};
       } else {
-        checks[decodeURIComponent(p.slice(1).split("/")[0])] = data;
+        obj[decodeURIComponent(p.slice(1).split("/")[0])] = data;
       }
-      Object.keys(checks).forEach((k) => { if (checks[k] == null) delete checks[k]; });
+      Object.keys(obj).forEach((k) => { if (obj[k] == null) delete obj[k]; });
+      return obj;
+    }
+    function applyServer(p, data, merge) {
+      checks = applyTo(checks, p, data, merge);
       cache();
       render();
     }
@@ -342,6 +398,16 @@
       es.addEventListener("patch", onData(true));
       es.addEventListener("cancel", () => { sync = "offline"; render(); });
       es.onerror = () => { if (sync !== "offline") { sync = "offline"; render(); } };  // EventSource가 자동 재연결
+
+      if (!RSHARED) return;
+      const rs = new EventSource(`${RSHARED}.json`);
+      const onReview = (merge) => (ev) => {
+        try { const m = JSON.parse(ev.data); rsync = "live"; reviews = applyTo(reviews, m.path, m.data, merge); cacheReviews(); render(); } catch {}
+      };
+      rs.addEventListener("put", onReview(false));
+      rs.addEventListener("patch", onReview(true));
+      // 규칙에 reviews 경로가 없으면 권한 거부로 스트림이 닫힘
+      rs.onerror = () => { if (rs.readyState === EventSource.CLOSED && rsync !== "live") { rsync = "denied"; render(); } };
     }
     return { render, connect };
   }
@@ -362,6 +428,7 @@
       viewId: "food-view", title: "음식", items: trip.food.items,
       path: trip.food.path,
       storeKey: "trip-food:" + trip.title,
+      reviewsPath: trip.food.reviewsPath,
       allOnMap: true,
       myMapUrl: trip.food.myMapUrl
     })

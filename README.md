@@ -19,15 +19,21 @@
 
 ## 준비물 공유 (Firebase Realtime Database)
 `itinerary.js`의 `shared.dbUrl`에 Firebase Realtime Database 주소를 넣으면 체크 상태가 접속한 모든 사람에게 실시간 공유됩니다.
-비워 두면 각 기기에만 저장됩니다. 권장 보안 규칙:
+비워 두면 각 기기에만 저장됩니다. 음식 탭의 한줄평(reviews)도 같은 DB에 저장됩니다. 권장 보안 규칙:
 
 ```json
 {
   "rules": {
-    "trips": { "$trip": { "checklist": {
-      ".read": true, ".write": true,
-      "$item": { ".validate": "newData.isBoolean()" }
-    } } }
+    "trips": { "$trip": {
+      "checklist": {
+        ".read": true, ".write": true,
+        "$item": { ".validate": "newData.isBoolean()" }
+      },
+      "reviews": {
+        ".read": true, ".write": true,
+        "$item": { ".validate": "newData.isString() && newData.val().length <= 100" }
+      }
+    } }
   }
 }
 ```

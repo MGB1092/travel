@@ -273,3 +273,19 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
 }
 .check li.checked .ck-body small { text-decoration: none; }
 .check input { flex: 0 0 22px; }
+
+/* 한줄평 */
+.review-area { display: flex; align-items: center; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.review { margin: 0; font-size: 14px; color: var(--text); background: var(--bg); border-radius: 10px; padding: 6px 10px; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.check li.checked .review-area span, .check li.checked .review { text-decoration: none; }
+.review-area button {
+  border: 1px solid var(--line); background: var(--card); color: var(--primary);
+  border-radius: 999px; padding: 4px 10px; font-size: 13px; cursor: pointer;
+}
+.review-area button.ghost { color: var(--muted); }
+.review-area .review-add { background: var(--bg); }
+.review-edit .review-in {
+  flex: 1 1 160px; min-width: 0; font-size: 16px; padding: 7px 10px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text);
+}
+.review-edit button[data-act="save"] { background: var(--primary); color: #fff; border-color: var(--primary); }
