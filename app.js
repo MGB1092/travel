@@ -340,7 +340,7 @@
               <div class="ck-body">
                 <span>${esc(c.name)}</span>
                 ${c.memo ? `<small>${esc(c.memo)}</small>` : ""}
-                ${c.place ? `<a class="map" href="${mapUrl(c.place)}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
+                ${c.url || c.place ? `<a class="map" href="${esc(c.url || mapUrl(c.place))}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
                 ${reviewHtml(fbKey(c.name))}
               </div>
             </li>`;
