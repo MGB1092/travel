@@ -104,7 +104,8 @@ window.TRIP = {
       items: [
         { time: "08:00", type: "food", title: "아침 · 숙소 근처 편의점/카페" },
         { time: "08:45", type: "stay", title: "숙소 체크아웃", memo: "체크아웃 11:00까지" },
-        { time: "09:15", type: "move", title: "나리타 익스프레스(N'EX) · 시부야 → 나리타", place: "Shibuya Station", memo: "약 1시간 20분 · 공항 제2터미널역에서 T3까지 도보 약 15분 · 열차 시간은 예약 내역 확인" },
+        { time: "09:15", type: "move", title: "나리타 익스프레스(N'EX) · 시부야 → 나리타", place: "Shibuya Station", memo: "약 1시간 20분 · 공항 제2터미널역에서 T3까지 도보 약 15분 · 열차 시간은 예약 내역 확인",
+          link: { label: "가는법 블로그", url: "https://m.blog.naver.com/makemfree/224397474478" } },
         { time: "11:00", type: "move", title: "나리타 T3 도착 · 탑승 수속", place: "Narita Airport Terminal 3", memo: "기내식 없으니 공항 푸드코트에서 점심" },
         { time: "13:05", type: "flight", title: "RF321 나리타 출발", memo: "에어로케이항공 · A320 · 💺 16C·16B·16A (지숙·성민·가을)" },
         { time: "15:30", type: "flight", title: "청주국제공항 도착", memo: "한국 시간" }
@@ -121,7 +122,7 @@ window.TRIP = {
   // 정보 탭 "참고 블로그" · { title, url, memo } (비어 있으면 섹션이 보이지 않음)
   blogs: [
     { title: "나리타공항에서 디즈니랜드 가는법", url: "https://m.blog.naver.com/ahyoniii/223134815284" },
-    { title: "네이버 블로그 · makemfree", url: "https://m.blog.naver.com/makemfree/224397474478" }
+    { title: "시부야역에서 나리타공항 가는법", url: "https://m.blog.naver.com/makemfree/224397474478" }
   ],
 
   // 전리품(사 올 것) 목록 · 준비물과 같은 방식으로 가족 공유
