@@ -26,8 +26,8 @@ window.TRIP = {
   },
 
   info: [
-    { icon: "🛫", label: "가는 편 · 10/8(목)", value: "RF322 · 09:30 청주(CJJ) → 11:50 나리타(NRT) T3", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함" },
-    { icon: "🛬", label: "오는 편 · 10/12(월)", value: "RF321 · 13:05 나리타(NRT) T3 → 15:30 청주(CJJ)", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함 · 시간은 현지 기준" },
+    { icon: "🛫", label: "가는 편 · 10/8(목)", value: "RF322 · 09:30 청주(CJJ) → 11:50 나리타(NRT) T3", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함 · 💺 지숙 6D · 성민 6E · 가을 6F" },
+    { icon: "🛬", label: "오는 편 · 10/12(월)", value: "RF321 · 13:05 나리타(NRT) T3 → 15:30 청주(CJJ)", memo: "에어로케이항공 · 일반석 · A320 · 기내식 불포함 · 💺 지숙 16C · 성민 16B · 가을 16A · 시간은 현지 기준" },
     { icon: "🏨", label: "숙소 · 10/8(목)~10/10(토) 2박", value: "호텔 오쿠라 도쿄 베이 ★5", place: "Hotel Okura Tokyo Bay", tel: "+81473553344",
       memo: "치바현 우라야스시 마이하마 1-8 · 체크인 15:00부터 · 체크아웃 12:00까지 · ☎ +81 47-355-3344" },
     { icon: "🎟️", label: "도쿄 디즈니랜드 · 10/9(금)", value: "디즈니랜드 e-티켓",
@@ -45,7 +45,7 @@ window.TRIP = {
       title: "도착 & 마이하마",
       items: [
         { time: "07:30", type: "move", title: "청주국제공항 도착", place: "Cheongju International Airport", memo: "출발 2시간 전 · 기내식 없으니 간단히 요기" },
-        { time: "09:30", type: "flight", title: "RF322 청주 출발", memo: "에어로케이항공 · A320" },
+        { time: "09:30", type: "flight", title: "RF322 청주 출발", memo: "에어로케이항공 · A320 · 💺 6D·6E·6F (지숙·성민·가을)" },
         { time: "11:50", type: "flight", title: "나리타 T3 도착", place: "Narita Airport Terminal 3", memo: "입국심사 · Visit Japan Web QR 준비" },
         { time: "12:30", type: "food", title: "점심 · 나리타 T3 푸드코트", place: "Narita Airport Terminal 3 Food Court" },
         { time: "13:30", type: "move", title: "공항 리무진버스 → 도쿄 디즈니 리조트 호텔", memo: "호텔 앞 하차 · 약 1시간~1시간 30분 · 시간표는 미리 확인",
@@ -106,7 +106,7 @@ window.TRIP = {
         { time: "08:45", type: "stay", title: "숙소 체크아웃", memo: "체크아웃 11:00까지" },
         { time: "09:15", type: "move", title: "나리타 익스프레스(N'EX) · 시부야 → 나리타", place: "Shibuya Station", memo: "약 1시간 20분 · 공항 제2터미널역에서 T3까지 도보 약 15분 · 열차 시간은 예약 내역 확인" },
         { time: "11:00", type: "move", title: "나리타 T3 도착 · 탑승 수속", place: "Narita Airport Terminal 3", memo: "기내식 없으니 공항 푸드코트에서 점심" },
-        { time: "13:05", type: "flight", title: "RF321 나리타 출발", memo: "에어로케이항공 · A320" },
+        { time: "13:05", type: "flight", title: "RF321 나리타 출발", memo: "에어로케이항공 · A320 · 💺 16C·16B·16A (지숙·성민·가을)" },
         { time: "15:30", type: "flight", title: "청주국제공항 도착", memo: "한국 시간" }
       ]
     }
