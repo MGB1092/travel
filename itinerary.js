@@ -36,6 +36,9 @@ window.TRIP = {
     { icon: "🏠", label: "숙소 · 10/10(토)~10/12(월) 2박", value: "시부야 아파트 (Shibuya Crossing 5mins walk COZY BRIGHT COMFY PAD 35sqm)", place: "2-20-26 Dogenzaka, Shibuya, Tokyo",
       memo: "도쿄도 시부야구 도겐자카 2-20-26 · 체크인 16:00~24:00 · 체크아웃 11:00까지 · 출입 방법은 예약 앱의 '체크인 안내' 확인",
       link: { label: "📄 숙소 안내서", url: "https://drive.google.com/file/d/1gEFF0V-djN84fVxuYr2tobdLEHTyixXo/view?usp=drivesdk" } },
+    { icon: "🚄", label: "나리타 익스프레스 · 10/12(월)", value: "N'EX 시부야 → 나리타공항",
+      memo: "바우처를 역 창구·발권기에서 실물 티켓으로 교환 · 공항 제2터미널역 하차 후 T3까지 도보 약 15분",
+      link: { label: "🎫 N'EX 바우처 열기", url: "https://drive.google.com/file/d/1I3rUcgbFq6t_fSHEEs03TRFLUSGJaced/view?usp=drivesdk" } },
     { icon: "🚨", label: "긴급 연락처", value: "주일 한국대사관 +81-3-3455-2601", tel: "+81334552601" }
   ],
 
@@ -105,7 +108,10 @@ window.TRIP = {
         { time: "08:00", type: "food", title: "아침 · 숙소 근처 편의점/카페" },
         { time: "08:45", type: "stay", title: "숙소 체크아웃", memo: "체크아웃 11:00까지" },
         { time: "09:15", type: "move", title: "나리타 익스프레스(N'EX) · 시부야 → 나리타", place: "Shibuya Station", memo: "약 1시간 20분 · 공항 제2터미널역에서 T3까지 도보 약 15분 · 열차 시간은 예약 내역 확인",
-          link: { label: "가는법 블로그", url: "https://m.blog.naver.com/makemfree/224397474478" } },
+          links: [
+            { icon: "🎫", label: "N'EX 바우처", url: "https://drive.google.com/file/d/1I3rUcgbFq6t_fSHEEs03TRFLUSGJaced/view?usp=drivesdk" },
+            { label: "가는법 블로그", url: "https://m.blog.naver.com/makemfree/224397474478" }
+          ] },
         { time: "11:00", type: "move", title: "나리타 T3 도착 · 탑승 수속", place: "Narita Airport Terminal 3", memo: "기내식 없으니 공항 푸드코트에서 점심" },
         { time: "13:05", type: "flight", title: "RF321 나리타 출발", memo: "에어로케이항공 · A320 · 💺 16C·16B·16A (지숙·성민·가을)" },
         { time: "15:30", type: "flight", title: "청주국제공항 도착", memo: "한국 시간" }

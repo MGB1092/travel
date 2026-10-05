@@ -203,7 +203,7 @@
               <p class="title">${esc(it.title)}</p>
               ${it.memo ? `<p class="memo">${esc(it.memo)}</p>` : ""}
               ${it.place ? `<a class="map" href="${mapUrl(it.place)}" target="_blank" rel="noopener">📍 지도 보기</a>` : ""}
-              ${it.link ? `<a class="map" href="${esc(it.link.url)}" target="_blank" rel="noopener">${it.link.icon || "📝"} ${esc(it.link.label)} ↗</a>` : ""}
+              ${(it.links || (it.link ? [it.link] : [])).map((l) => `<a class="map" href="${esc(l.url)}" target="_blank" rel="noopener">${l.icon || "📝"} ${esc(l.label)} ↗</a>`).join(" ")}
             </div>
           </li>`).join("")}
       </ol>`;
