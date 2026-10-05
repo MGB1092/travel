@@ -337,6 +337,17 @@
     const sections = groups && groups.length
       ? groups.map((g) => ({ title: g.title, list: entries.filter((c) => (c.group || groups[groups.length - 1].key) === g.key) }))
       : [{ title: null, list: entries }];
+    // 묶음 필터 (전체 / 묶음별) · 보기 설정은 각자 기기에 기억
+    const fKey = storeKey + ":filter";
+    let filter = (() => { try { return localStorage.getItem(fKey) || "all"; } catch { return "all"; } })();
+    if (!groups || !groups.some((g) => g.key === filter)) filter = "all";
+    function filterHtml() {
+      if (!groups || groups.length < 2) return "";
+      const chips = [{ key: "all", label: "전체", n: entries.length }]
+        .concat(groups.map((g, i) => ({ key: g.key, label: g.short || g.title, n: sections[i].list.length })));
+      return `<div class="filter" role="tablist">${chips.map((c) =>
+        `<button role="tab" data-filter="${esc(c.key)}" class="${filter === c.key ? "on" : ""}" aria-selected="${filter === c.key}">${esc(c.label)} <small>${c.n}</small></button>`).join("")}</div>`;
+    }
     function itemHtml(c) {
       const on = !!checks[fbKey(c.name)];
       return `
@@ -363,7 +374,8 @@
           ? `<a class="btn-link" href="${esc(myMapUrl)}" target="_blank" rel="noopener">🗺️ 우리 가족 맛집 지도 (내 지도) 보기 ↗</a>`
           : `<a class="btn-link" href="${multiMapUrl(placed.map((c) => c.place))}" target="_blank" rel="noopener">🗺️ 구글 지도에서 ${Math.min(placed.length, MAX_STOPS)}곳 한 번에 보기 ↗</a>
         ${placed.length > MAX_STOPS ? `<p class="progress">구글 지도 제한으로 위에서부터 ${MAX_STOPS}곳만 표시돼요</p>` : ""}`}` : ""}
-        ${sections.map((s) => `
+        ${filterHtml()}
+        ${sections.filter((s, i) => filter === "all" || groups[i].key === filter).map((s) => `
           ${s.title ? `<h3 class="grp">${esc(s.title)} <small>${s.list.filter((c) => checks[fbKey(c.name)]).length} / ${s.list.length}</small></h3>` : ""}
           <ul class="list check">${s.list.map(itemHtml).join("")}</ul>`).join("")}`;
       const inp = view.querySelector(".review-in");
@@ -376,6 +388,13 @@
       if (e.key === "Escape") { editing = null; render(); }
     });
     view.addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-filter]");
+      if (chip) {
+        filter = chip.dataset.filter;
+        try { localStorage.setItem(fKey, filter); } catch {}
+        render();
+        return;
+      }
       if (e.target.closest("a")) return;   // 지도 링크는 체크하지 않음
       const li = e.target.closest("li[data-item]");
       if (!li) return;

@@ -145,8 +145,8 @@ window.TRIP = {
     reviewers: ["지숙", "성민"],   // 한줄평 쓰는 사람 (순서대로 한 줄씩)
     // 목록을 나눠 보여줄 묶음 (항목에 group 이 없으면 마지막 묶음)
     groups: [
-      { key: "meal", title: "🍽️ 식사" },
-      { key: "dessert", title: "🍰 디저트 · 카페" }
+      { key: "meal", title: "🍽️ 식사", short: "🍽️ 식사" },
+      { key: "dessert", title: "🍰 디저트 · 카페", short: "🍰 디저트" }
     ],
     // 구글 "내 지도" 공유 링크를 넣으면 '한 번에 보기' 버튼이 이 지도로 연결됩니다 (maps/food.csv 가져오기용)
     myMapUrl: "https://www.google.com/maps/d/viewer?mid=1rR5zbNyqZDSh_iP17IfdCnWubDckUNw",

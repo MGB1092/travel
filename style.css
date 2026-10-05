@@ -293,3 +293,12 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
 .review-edit button[data-act="save"] { background: var(--primary); color: #fff; border-color: var(--primary); }
 .grp { font-family: var(--serif); font-size: 17px; margin: 22px 0 10px; }
 .grp small { font-family: inherit; font-weight: 400; font-size: 13px; color: var(--muted); margin-left: 4px; }
+.filter { display: flex; gap: 8px; margin: 4px 0 6px; }
+.filter button {
+  flex: 1; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  border-radius: 999px; padding: 8px 6px; font-size: 14px; cursor: pointer; font-family: var(--serif);
+}
+.filter button small { color: var(--muted); font-size: 12px; }
+.filter button.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.filter button.on small { color: rgba(255,255,255,.85); }
+@media (prefers-color-scheme: dark) { .filter button.on { color: #1b1613; } .filter button.on small { color: rgba(27,22,19,.75); } }
