@@ -112,7 +112,9 @@ window.TRIP = {
   },
 
   // 정보 탭 "참고 블로그" · { title, url, memo } (비어 있으면 섹션이 보이지 않음)
-  blogs: [],
+  blogs: [
+    { title: "네이버 블로그 · ahyoniii", url: "https://m.blog.naver.com/ahyoniii/223134815284" }
+  ],
 
   // 전리품(사 올 것) 목록 · 준비물과 같은 방식으로 가족 공유
   // (Firebase 보안 규칙 trips/$trip/checklist 에 맞춘 경로)
