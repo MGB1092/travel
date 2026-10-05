@@ -31,7 +31,8 @@ window.TRIP = {
     { icon: "🏨", label: "숙소 · 10/8(목)~10/10(토) 2박", value: "호텔 오쿠라 도쿄 베이 ★5", place: "Hotel Okura Tokyo Bay", tel: "+81473553344",
       memo: "치바현 우라야스시 마이하마 1-8 · 체크인 15:00부터 · 체크아웃 12:00까지 · ☎ +81 47-355-3344" },
     { icon: "🏠", label: "숙소 · 10/10(토)~10/12(월) 2박", value: "시부야 아파트 (Shibuya Crossing 5mins walk COZY BRIGHT COMFY PAD 35sqm)", place: "2-20-26 Dogenzaka, Shibuya, Tokyo",
-      memo: "도쿄도 시부야구 도겐자카 2-20-26 · 체크인 16:00~24:00 · 체크아웃 11:00까지 · 출입 방법은 예약 앱의 '체크인 안내' 확인" },
+      memo: "도쿄도 시부야구 도겐자카 2-20-26 · 체크인 16:00~24:00 · 체크아웃 11:00까지 · 출입 방법은 예약 앱의 '체크인 안내' 확인",
+      link: { label: "📄 숙소 안내서", url: "https://drive.google.com/file/d/1gEFF0V-djN84fVxuYr2tobdLEHTyixXo/view?usp=drivesdk" } },
     { icon: "🚨", label: "긴급 연락처", value: "주일 한국대사관 +81-3-3455-2601", tel: "+81334552601" }
   ],
 
@@ -76,7 +77,8 @@ window.TRIP = {
         { time: "14:00", type: "sight", title: "메이지 신궁", place: "Meiji Jingu" },
         { time: "15:00", type: "shop", title: "다케시타 거리", place: "Takeshita Street" },
         { time: "16:30", type: "sight", title: "시부야 스카이", place: "Shibuya Sky", memo: "일몰 시간대 예약 추천" },
-        { time: "18:00", type: "stay", title: "짐 찾아서 숙소 체크인", place: "2-20-26 Dogenzaka, Shibuya, Tokyo", memo: "시부야 스크램블 교차로에서 도보 5분 · 체크인 16:00~24:00" },
+        { time: "18:00", type: "stay", title: "짐 찾아서 숙소 체크인", place: "2-20-26 Dogenzaka, Shibuya, Tokyo", memo: "시부야 스크램블 교차로에서 도보 5분 · 체크인 16:00~24:00",
+          link: { icon: "📄", label: "숙소 안내서", url: "https://drive.google.com/file/d/1gEFF0V-djN84fVxuYr2tobdLEHTyixXo/view?usp=drivesdk" } },
         { time: "19:00", type: "food", title: "저녁 · 야키토리", place: "Nonbei Yokocho Shibuya" }
       ]
     },

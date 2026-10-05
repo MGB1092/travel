@@ -203,7 +203,7 @@
               <p class="title">${esc(it.title)}</p>
               ${it.memo ? `<p class="memo">${esc(it.memo)}</p>` : ""}
               ${it.place ? `<a class="map" href="${mapUrl(it.place)}" target="_blank" rel="noopener">📍 지도 보기</a>` : ""}
-              ${it.link ? `<a class="map" href="${esc(it.link.url)}" target="_blank" rel="noopener">📝 ${esc(it.link.label)} ↗</a>` : ""}
+              ${it.link ? `<a class="map" href="${esc(it.link.url)}" target="_blank" rel="noopener">${it.link.icon || "📝"} ${esc(it.link.label)} ↗</a>` : ""}
             </div>
           </li>`).join("")}
       </ol>`;
@@ -235,6 +235,7 @@
               ${x.memo ? `<div class="label">${esc(x.memo)}</div>` : ""}
               ${x.place ? `<a href="${mapUrl(x.place)}" target="_blank" rel="noopener">📍 지도</a>` : ""}
               ${x.tel ? `<a href="tel:${esc(x.tel)}">📞 전화 걸기</a>` : ""}
+              ${x.link ? `<a href="${esc(x.link.url)}" target="_blank" rel="noopener">${esc(x.link.label)} ↗</a>` : ""}
             </div>
           </li>`).join("")}
       </ul>
