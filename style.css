@@ -291,3 +291,5 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
   border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text);
 }
 .review-edit button[data-act="save"] { background: var(--primary); color: #fff; border-color: var(--primary); }
+.grp { font-family: var(--serif); font-size: 17px; margin: 22px 0 10px; }
+.grp small { font-family: inherit; font-weight: 400; font-size: 13px; color: var(--muted); margin-left: 4px; }

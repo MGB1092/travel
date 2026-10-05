@@ -277,7 +277,7 @@
     return url;
   }
 
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath, reviewers }) {
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath, reviewers, groups }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
@@ -333,6 +333,23 @@
       }
     }
 
+    // groups: [{ key, title }] 이 있으면 항목의 group 값으로 나눠서 표시 (group 없으면 마지막 그룹)
+    const sections = groups && groups.length
+      ? groups.map((g) => ({ title: g.title, list: entries.filter((c) => (c.group || groups[groups.length - 1].key) === g.key) }))
+      : [{ title: null, list: entries }];
+    function itemHtml(c) {
+      const on = !!checks[fbKey(c.name)];
+      return `
+            <li class="${on ? "checked" : ""}" data-item="${esc(c.name)}">
+              <input type="checkbox" ${on ? "checked" : ""} tabindex="-1">
+              <div class="ck-body">
+                <span>${esc(c.name)}</span>
+                ${c.memo ? `<small>${esc(c.memo)}</small>` : ""}
+                ${c.url || c.place ? `<a class="map" href="${esc(c.url || mapUrl(c.place))}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
+                ${reviewHtml(fbKey(c.name))}
+              </div>
+            </li>`;
+    }
     function render() {
       const hadFocus = document.activeElement && view.contains(document.activeElement) && document.activeElement.classList.contains("review-in");
       const done = items.filter((c) => checks[fbKey(c)]).length;
@@ -346,21 +363,9 @@
           ? `<a class="btn-link" href="${esc(myMapUrl)}" target="_blank" rel="noopener">🗺️ 우리 가족 맛집 지도 (내 지도) 보기 ↗</a>`
           : `<a class="btn-link" href="${multiMapUrl(placed.map((c) => c.place))}" target="_blank" rel="noopener">🗺️ 구글 지도에서 ${Math.min(placed.length, MAX_STOPS)}곳 한 번에 보기 ↗</a>
         ${placed.length > MAX_STOPS ? `<p class="progress">구글 지도 제한으로 위에서부터 ${MAX_STOPS}곳만 표시돼요</p>` : ""}`}` : ""}
-        <ul class="list check">
-          ${entries.map((c) => {
-            const on = !!checks[fbKey(c.name)];
-            return `
-            <li class="${on ? "checked" : ""}" data-item="${esc(c.name)}">
-              <input type="checkbox" ${on ? "checked" : ""} tabindex="-1">
-              <div class="ck-body">
-                <span>${esc(c.name)}</span>
-                ${c.memo ? `<small>${esc(c.memo)}</small>` : ""}
-                ${c.url || c.place ? `<a class="map" href="${esc(c.url || mapUrl(c.place))}" target="_blank" rel="noopener">📍 구글 지도</a>` : ""}
-                ${reviewHtml(fbKey(c.name))}
-              </div>
-            </li>`;
-          }).join("")}
-        </ul>`;
+        ${sections.map((s) => `
+          ${s.title ? `<h3 class="grp">${esc(s.title)} <small>${s.list.filter((c) => checks[fbKey(c.name)]).length} / ${s.list.length}</small></h3>` : ""}
+          <ul class="list check">${s.list.map(itemHtml).join("")}</ul>`).join("")}`;
       const inp = view.querySelector(".review-in");
       if (inp && (focusEdit || hadFocus)) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); focusEdit = false; }
     }
@@ -452,6 +457,7 @@
       storeKey: "trip-food:" + trip.title,
       reviewsPath: trip.food.reviewsPath,
       reviewers: trip.food.reviewers,
+      groups: trip.food.groups,
       allOnMap: true,
       myMapUrl: trip.food.myMapUrl
     })

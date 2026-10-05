@@ -143,26 +143,31 @@ window.TRIP = {
     path: "trips/gaeul-tokyo-2026-food/checklist",
     reviewsPath: "trips/gaeul-tokyo-2026-food/reviews",   // 식당별 한줄평 (Firebase 규칙에 reviews 허용 필요)
     reviewers: ["지숙", "성민"],   // 한줄평 쓰는 사람 (순서대로 한 줄씩)
+    // 목록을 나눠 보여줄 묶음 (항목에 group 이 없으면 마지막 묶음)
+    groups: [
+      { key: "meal", title: "🍽️ 식사" },
+      { key: "dessert", title: "🍰 디저트 · 카페" }
+    ],
     // 구글 "내 지도" 공유 링크를 넣으면 '한 번에 보기' 버튼이 이 지도로 연결됩니다 (maps/food.csv 가져오기용)
     myMapUrl: "https://www.google.com/maps/d/viewer?mid=1rR5zbNyqZDSh_iP17IfdCnWubDckUNw",
     items: [
       { name: "Aigre Douce (에그르 두스) 🍰", place: "Aigre Douce, 3-22-13 Shimoochiai, Shinjuku City, Tokyo",
         memo: "프렌치 파티세리 · ★4.4 · 신주쿠구 시모오치아이 3-22-13 · 11:00 오픈 (휴무일 확인)" },
-      { name: "스아게 수프카레 시부야점 🍛", place: "Hokkaido Soup Curry Suage Shibuya",
+      { group: "meal", name: "스아게 수프카레 시부야점 🍛", place: "Hokkaido Soup Curry Suage Shibuya",
         memo: "홋카이도 수프카레 · ★4.6 · ¥1,000–2,000 · 22:00까지 · 시부야 숙소 근처 (10/10~11 저녁 추천)" },
       { name: "TANUKI APPETIZING (타누키 에피타이징) 🥯", place: "TANUKI APPETIZING, 4-10-5 Kachidoki, Chuo City, Tokyo 104-0054",
         memo: "베이글 · 과일 샌드 · ★4.1 · ¥1,000–2,000 · 포장 가능 · PayPay · 주오구 가치도키 4-10-5 としの荘 (팀랩 플래닛 근처)" },
       { name: "아임 도넛? 하라주쿠 (I'm donut?) 🍩", place: "I'm donut? Harajuku, 1-14-24 Jingumae, Shibuya City, Tokyo",
         memo: "생도넛 · ★3.8 · ¥1–1,000 · 20:00까지 · 시부야구 진구마에 1-14-24 · 하라주쿠역 근처 (10/10 다케시타 거리 때 들르기 좋음)" },
-      { name: "츠지한 니혼바시 본점 (つじ半) 🐟", place: "Tsujihan Nihonbashi, 3-1-15 Nihonbashi, Chuo City, Tokyo 103-0027",
+      { group: "meal", name: "츠지한 니혼바시 본점 (つじ半) 🐟", place: "Tsujihan Nihonbashi, 3-1-15 Nihonbashi, Chuo City, Tokyo 103-0027",
         memo: "해산물 덮밥 (제이타쿠동) · ★4.4 · ¥2,000–3,000 · 💴 현금만 · 예약 불가 (줄 서기) · 주오구 니혼바시 3-1-15 久栄ビル 1F · 도쿄역 근처" },
-      { name: "교노스케 (야키니쿠) 🥩", url: "https://maps.google.com/?cid=11460069835373479165", memo: "★4.8 · 개인실 있음 · 점심 세트 추천" },
-      { name: "자우오 (초밥) 🎣", url: "https://maps.google.com/?cid=10477882707245795315", memo: "★4.7 · 직접 낚시해서 먹는 곳 · 토·일 점심 영업" },
-      { name: "우나기 요시카와 (장어) 🍱", url: "https://maps.google.com/?cid=11717015292509057096", memo: "★4.7 · 세트에 닭고기·계란말이 포함" },
-      { name: "가구라자카 사쿠라 진난점 (돈까스) 🐷", url: "https://maps.google.com/?cid=11605811206430940264", memo: "★4.5 · 테이블 넓음 · 밥 리필" },
-      { name: "오코게 (몬자야키) 🥘", url: "https://maps.google.com/?cid=1978719074806591162", memo: "★4.9 · 직원이 구워줌" },
-      { name: "마스다테이 (몬자야키) 🥘", url: "https://maps.google.com/?cid=2803071266958778318", memo: "★4.6 · 오코게 대기가 길 때 대안" },
-      { name: "오레류 시오라멘 (라멘) 🍜", url: "https://maps.google.com/?cid=5531291014483696484", memo: "★4.4 · 일반 테이블석" },
+      { group: "meal", name: "교노스케 (야키니쿠) 🥩", url: "https://maps.google.com/?cid=11460069835373479165", memo: "★4.8 · 개인실 있음 · 점심 세트 추천" },
+      { group: "meal", name: "자우오 (초밥) 🎣", url: "https://maps.google.com/?cid=10477882707245795315", memo: "★4.7 · 직접 낚시해서 먹는 곳 · 토·일 점심 영업" },
+      { group: "meal", name: "우나기 요시카와 (장어) 🍱", url: "https://maps.google.com/?cid=11717015292509057096", memo: "★4.7 · 세트에 닭고기·계란말이 포함" },
+      { group: "meal", name: "가구라자카 사쿠라 진난점 (돈까스) 🐷", url: "https://maps.google.com/?cid=11605811206430940264", memo: "★4.5 · 테이블 넓음 · 밥 리필" },
+      { group: "meal", name: "오코게 (몬자야키) 🥘", url: "https://maps.google.com/?cid=1978719074806591162", memo: "★4.9 · 직원이 구워줌" },
+      { group: "meal", name: "마스다테이 (몬자야키) 🥘", url: "https://maps.google.com/?cid=2803071266958778318", memo: "★4.6 · 오코게 대기가 길 때 대안" },
+      { group: "meal", name: "오레류 시오라멘 (라멘) 🍜", url: "https://maps.google.com/?cid=5531291014483696484", memo: "★4.4 · 일반 테이블석" },
       { name: "초네 (닌교초) 🍡", url: "https://maps.google.com/?cid=5794026808577077147", memo: "시라타마 오구라 안미츠" },
       { name: "아마잇코 (니시오기쿠보) 🍧", url: "https://maps.google.com/?cid=16955808462236171765", memo: "빙수" },
       { name: "고리야 피스 (기치조지) 🍧", url: "https://maps.google.com/?cid=9771766898175161857", memo: "시오캐러멜 빙수" },
@@ -186,8 +191,6 @@ window.TRIP = {
       { name: "노스탤지아 카페 (나카노 노가타) 🍠", url: "https://www.google.com/maps/search/?api=1&query=Nostalgia+cafe+Nogata+Nakano", memo: "고구마 치즈케이크 · 📵 내부 촬영 불가" },
       { name: "이시야 니혼바시 (코레도 무로마치 테라스 1층) 🍵", url: "https://www.google.com/maps/search/?api=1&query=ishiya+nihonbashi", memo: "말차 모찌 수플레" },
       { name: "톨로 커피&베이커리 (세타가야 다이타) 🥐", url: "https://www.google.com/maps/search/?api=1&query=Tolo+coffee+bakery+Daita", memo: "크림 들어간 빵 · 지브리 감성 인테리어" },
-      "스시 (회전초밥)", "라멘", "규카츠", "텐동", "야키토리", "몬자야키",
-      "시라스동 (가마쿠라)", "디즈니 추로스 & 팝콘", "편의점 디저트 · 에그샌드", "멜론빵"
     ]
   },
 
