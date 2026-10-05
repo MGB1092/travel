@@ -177,6 +177,15 @@ window.TRIP = {
       { name: "미니멀 (도미가야/시부야) 🍫", url: "https://maps.google.com/?cid=14529353184513351834", memo: "초콜릿" },
       { name: "쓰루세 (유시마) 🍡", url: "https://maps.google.com/?cid=10455331451798373841", memo: "마메다이후쿠" },
       { name: "와구리야 (야나카) 🌰", url: "https://maps.google.com/?cid=6611789924566567085", memo: "몽블랑" },
+      { name: "나나시안 Nanashian (시부야 히로오) 🍮", url: "https://www.google.com/maps/search/?api=1&query=Nanashian+Hiroo+Shibuya", memo: "백조 푸딩 (슈를 백조 모양으로 올린 푸딩)" },
+      { name: "오이와케 당고 혼포 (신주쿠) 🍡", url: "https://www.google.com/maps/search/?api=1&query=Oiwake+Dango+Honpo+Shinjuku", memo: "300년 된 당고집 · 매장 취식 가능 · 차 제공" },
+      { name: "카나다야 Kanadaya (긴자 EXITMELSA 1층) 🍓", url: "https://www.google.com/maps/search/?api=1&query=Kanadaya+EXITMELSA+Ginza", memo: "공중부양 다이후쿠 (딸기 모찌)" },
+      { name: "베니즈루 (아사쿠사) 🥞", url: "https://www.google.com/maps/search/?api=1&query=Benizuru+Nishiasakusa", memo: "계란 수플레 팬케이크 · ⏰ 아침 7시 반쯤 가서 번호표 받기 (10시부터 시간대 예약)" },
+      { name: "마이스타베이스 mystarbase (가와사키 무사시코스기) 🍰", url: "https://www.google.com/maps/search/?api=1&query=mystarbase+Kosugi+Kawasaki", memo: "크렘브륄레 바움쿠헨 · 소프트아이스크림+바움쿠헨" },
+      { name: "데일리 치코 Daily Chiko (나카노 브로드웨이 B1) 🍦", url: "https://www.google.com/maps/search/?api=1&query=Daily+Chiko+Nakano", memo: "8단 소프트아이스크림 (소다맛 추천)" },
+      { name: "노스탤지아 카페 (나카노 노가타) 🍠", url: "https://www.google.com/maps/search/?api=1&query=Nostalgia+cafe+Nogata+Nakano", memo: "고구마 치즈케이크 · 📵 내부 촬영 불가" },
+      { name: "이시야 니혼바시 (코레도 무로마치 테라스 1층) 🍵", url: "https://www.google.com/maps/search/?api=1&query=ishiya+nihonbashi", memo: "말차 모찌 수플레" },
+      { name: "톨로 커피&베이커리 (세타가야 다이타) 🥐", url: "https://www.google.com/maps/search/?api=1&query=Tolo+coffee+bakery+Daita", memo: "크림 들어간 빵 · 지브리 감성 인테리어" },
       "스시 (회전초밥)", "라멘", "규카츠", "텐동", "야키토리", "몬자야키",
       "시라스동 (가마쿠라)", "디즈니 추로스 & 팝콘", "편의점 디저트 · 에그샌드", "멜론빵"
     ]
