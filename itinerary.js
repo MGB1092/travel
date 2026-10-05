@@ -44,7 +44,8 @@ window.TRIP = {
         { time: "09:30", type: "flight", title: "RF322 청주 출발", memo: "에어로케이항공 · A320" },
         { time: "11:50", type: "flight", title: "나리타 T3 도착", place: "Narita Airport Terminal 3", memo: "입국심사 · Visit Japan Web QR 준비" },
         { time: "12:30", type: "food", title: "점심 · 나리타 T3 푸드코트", place: "Narita Airport Terminal 3 Food Court" },
-        { time: "13:30", type: "move", title: "공항 리무진버스 → 도쿄 디즈니 리조트 호텔", memo: "호텔 앞 하차 · 약 1시간~1시간 30분 · 시간표는 미리 확인" },
+        { time: "13:30", type: "move", title: "공항 리무진버스 → 도쿄 디즈니 리조트 호텔", memo: "호텔 앞 하차 · 약 1시간~1시간 30분 · 시간표는 미리 확인",
+          link: { label: "가는법 블로그", url: "https://m.blog.naver.com/ahyoniii/223134815284" } },
         { time: "15:00", type: "stay", title: "호텔 오쿠라 도쿄 베이 체크인", place: "Hotel Okura Tokyo Bay", memo: "체크인 15:00부터 · 마이하마 1-8" },
         { time: "16:30", type: "shop", title: "이크스피아리 산책", place: "Ikspiari", memo: "마이하마역 앞 쇼핑몰 · 디즈니 리조트 라인으로 이동" },
         { time: "18:30", type: "food", title: "저녁 · 이크스피아리 레스토랑", place: "Ikspiari" }
