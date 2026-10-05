@@ -236,7 +236,20 @@
               ${x.tel ? `<a href="tel:${esc(x.tel)}">📞 전화 걸기</a>` : ""}
             </div>
           </li>`).join("")}
-      </ul>`;
+      </ul>
+      ${trip.blogs?.length ? `
+      <h2>참고 블로그</h2>
+      <ul class="list">
+        ${trip.blogs.map((x) => `
+          <li>
+            <div class="emoji">📝</div>
+            <div>
+              <div class="value">${esc(x.title)}</div>
+              ${x.memo ? `<div class="label">${esc(x.memo)}</div>` : ""}
+              <a href="${esc(x.url)}" target="_blank" rel="noopener">블로그 열기 ↗</a>
+            </div>
+          </li>`).join("")}
+      </ul>` : ""}`;
   }
 
   // 체크리스트 (준비물 · 전리품 공용)
