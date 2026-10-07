@@ -15,7 +15,7 @@
   $("title").textContent = trip.title;
   $("subtitle").textContent = trip.subtitle || "";
   if (trip.photo) {
-    $("photo-img").src = trip.photo;
+    $("photo-img").src = trip.photo + (window.V ? "?v=" + window.V : "");
     $("photo-img").alt = trip.title;
     $("photo").hidden = false;
     document.querySelector(".hero").classList.add("has-photo");
