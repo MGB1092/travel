@@ -56,7 +56,7 @@ window.TRIP = {
         { time: "15:00", type: "stay", title: "호텔 오쿠라 도쿄 베이 체크인", place: "Hotel Okura Tokyo Bay", memo: "체크인 15:00부터 · 마이하마 1-8" },
         { time: "16:00", type: "move", title: "호텔 → 이크스피아리", place: "Bayside Station", memo: "베이사이드역에서 디즈니 리조트 라인 → 리조트 게이트웨이역 (마이하마역 앞)" },
         { time: "16:15", type: "shop", title: "이크스피아리 쇼핑몰 쇼핑", place: "Ikspiari", memo: "마이하마역 바로 앞 쇼핑몰 · 역 옆 디즈니 굿즈숍 '본보야지'도 함께 둘러보기 · 내일 디즈니랜드 간식·물 미리 사두기" },
-        { time: "18:30", type: "food", title: "저녁 · 이크스피아리 레스토랑", place: "Ikspiari" },
+        { time: "18:30", type: "food", title: "저녁 · 야키니쿠 도라지 (이크스피아리 3층)", place: "Yakiniku Toraji Ikspiari, 1-4 Maihama, Urayasu, Chiba", memo: "야키니쿠 · ★3.5 · ¥4,000–8,000 · 유아용 의자 있음" },
         { time: "20:00", type: "stay", title: "호텔로 돌아와 휴식", place: "Hotel Okura Tokyo Bay", memo: "내일 디즈니랜드 일찍 출발 · e-티켓 확인" }
       ]
     },
@@ -163,6 +163,8 @@ window.TRIP = {
         memo: "생도넛 · ★3.8 · ¥1–1,000 · 20:00까지 · 시부야구 진구마에 1-14-24 · 하라주쿠역 근처 (10/10 다케시타 거리 때 들르기 좋음)" },
       { group: "meal", name: "츠지한 니혼바시 본점 (つじ半) 🐟", place: "Tsujihan Nihonbashi, 3-1-15 Nihonbashi, Chuo City, Tokyo 103-0027",
         memo: "해산물 덮밥 (제이타쿠동) · ★4.4 · ¥2,000–3,000 · 💴 현금만 · 예약 불가 (줄 서기) · 주오구 니혼바시 3-1-15 久栄ビル 1F · 도쿄역 근처" },
+      { group: "meal", name: "야키니쿠 도라지 이크스피아리점 🥩", place: "Yakiniku Toraji Ikspiari, 1-4 Maihama, Urayasu, Chiba",
+        memo: "10/8 저녁에 먹은 곳 · ★3.5 · ¥4,000–8,000 · 이크스피아리 3층 (마이하마 1-4) · 음료 무제한 · 유아용 의자 · 예약 가능" },
       { group: "meal", name: "교노스케 (야키니쿠) 🥩", url: "https://maps.google.com/?cid=11460069835373479165", memo: "★4.8 · 개인실 있음 · 점심 세트 추천" },
       { group: "meal", name: "자우오 (초밥) 🎣", url: "https://maps.google.com/?cid=10477882707245795315", memo: "★4.7 · 직접 낚시해서 먹는 곳 · 토·일 점심 영업" },
       { group: "meal", name: "우나기 요시카와 (장어) 🍱", url: "https://maps.google.com/?cid=11717015292509057096", memo: "★4.7 · 세트에 닭고기·계란말이 포함" },
