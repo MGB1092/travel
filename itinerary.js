@@ -45,7 +45,7 @@ window.TRIP = {
   days: [
     {
       date: "2026-10-08",
-      title: "도착 & 마이하마",
+      title: "도착 & 이크스피아리 쇼핑",
       items: [
         { time: "07:30", type: "move", title: "청주국제공항 도착", place: "Cheongju International Airport", memo: "출발 2시간 전 · 기내식 없으니 간단히 요기" },
         { time: "09:30", type: "flight", title: "RF322 청주 출발", memo: "에어로케이항공 · A320 · 💺 6D·6E·6F (지숙·성민·가을)" },
@@ -54,8 +54,10 @@ window.TRIP = {
         { time: "13:30", type: "move", title: "공항 리무진버스 → 도쿄 디즈니 리조트 호텔", memo: "호텔 앞 하차 · 약 1시간~1시간 30분 · 시간표는 미리 확인",
           link: { label: "가는법 블로그", url: "https://m.blog.naver.com/ahyoniii/223134815284" } },
         { time: "15:00", type: "stay", title: "호텔 오쿠라 도쿄 베이 체크인", place: "Hotel Okura Tokyo Bay", memo: "체크인 15:00부터 · 마이하마 1-8" },
-        { time: "16:30", type: "shop", title: "이크스피아리 산책", place: "Ikspiari", memo: "마이하마역 앞 쇼핑몰 · 디즈니 리조트 라인으로 이동" },
-        { time: "18:30", type: "food", title: "저녁 · 이크스피아리 레스토랑", place: "Ikspiari" }
+        { time: "16:00", type: "move", title: "호텔 → 이크스피아리", place: "Bayside Station", memo: "베이사이드역에서 디즈니 리조트 라인 → 리조트 게이트웨이역 (마이하마역 앞)" },
+        { time: "16:15", type: "shop", title: "이크스피아리 쇼핑몰 쇼핑", place: "Ikspiari", memo: "마이하마역 바로 앞 쇼핑몰 · 역 옆 디즈니 굿즈숍 '본보야지'도 함께 둘러보기 · 내일 디즈니랜드 간식·물 미리 사두기" },
+        { time: "18:30", type: "food", title: "저녁 · 이크스피아리 레스토랑", place: "Ikspiari" },
+        { time: "20:00", type: "stay", title: "호텔로 돌아와 휴식", place: "Hotel Okura Tokyo Bay", memo: "내일 디즈니랜드 일찍 출발 · e-티켓 확인" }
       ]
     },
     {
