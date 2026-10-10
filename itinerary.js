@@ -195,6 +195,8 @@ window.TRIP = {
       { name: "노스탤지아 카페 (나카노 노가타) 🍠", url: "https://www.google.com/maps/search/?api=1&query=Nostalgia+cafe+Nogata+Nakano", memo: "고구마 치즈케이크 · 📵 내부 촬영 불가" },
       { name: "이시야 니혼바시 (코레도 무로마치 테라스 1층) 🍵", url: "https://www.google.com/maps/search/?api=1&query=ishiya+nihonbashi", memo: "말차 모찌 수플레" },
       { name: "톨로 커피&베이커리 (세타가야 다이타) 🥐", url: "https://www.google.com/maps/search/?api=1&query=Tolo+coffee+bakery+Daita", memo: "크림 들어간 빵 · 지브리 감성 인테리어" },
+      { name: "호시노 커피 시부야109점 ☕", url: "https://www.google.com/maps/search/?api=1&query=Hoshino+Coffee+Shibuya+109",
+        memo: "핸드드립 커피 · 수플레 팬케이크 · 시부야109 건물 안 (시부야 숙소 근처)" },
     ]
   },
 
