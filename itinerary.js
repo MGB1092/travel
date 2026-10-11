@@ -199,6 +199,8 @@ window.TRIP = {
       { name: "톨로 커피&베이커리 (세타가야 다이타) 🥐", url: "https://www.google.com/maps/search/?api=1&query=Tolo+coffee+bakery+Daita", memo: "크림 들어간 빵 · 지브리 감성 인테리어" },
       { name: "호시노 커피 시부야109점 ☕", url: "https://www.google.com/maps/search/?api=1&query=Hoshino+Coffee+Shibuya+109",
         memo: "핸드드립 커피 · 수플레 팬케이크 · 시부야109 건물 안 (시부야 숙소 근처)" },
+      { name: "해먹 Hammock (ハンモック · 시부야) 🥧", url: "https://www.google.com/maps/search/?api=1&query=Hammock+cafe+Shibuya+%E3%83%8F%E3%83%B3%E3%83%A2%E3%83%83%E3%82%AF",
+        memo: "카페 · ★4.6 · ¥1,000–2,000 · 갓 만든 밀푀유 추천 · 파스타도 있음 · 시부야 중심가인데 차분한 분위기 · 20:00까지 (식사 주문 19:30까지) · 시부야 숙소 근처" },
     ]
   },
 
