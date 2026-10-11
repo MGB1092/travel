@@ -171,6 +171,8 @@ window.TRIP = {
       { group: "meal", name: "가구라자카 사쿠라 진난점 (돈까스) 🐷", url: "https://maps.google.com/?cid=11605811206430940264", memo: "★4.5 · 테이블 넓음 · 밥 리필" },
       { group: "meal", name: "오코게 (몬자야키) 🥘", url: "https://maps.google.com/?cid=1978719074806591162", memo: "★4.9 · 직원이 구워줌" },
       { group: "meal", name: "마스다테이 (몬자야키) 🥘", url: "https://maps.google.com/?cid=2803071266958778318", memo: "★4.6 · 오코게 대기가 길 때 대안" },
+      { group: "meal", name: "아후리 시부야 도겐자카 (AFURI 渋谷道玄坂) 🍜", url: "https://www.google.com/maps/search/?api=1&query=AFURI+Shibuya+Dogenzaka",
+        memo: "★4.8 · ¥1,000–2,000 · 시그니처 유자 시오 라멘 · 키오스크 주문 · 💳 카드만 (현금 불가) · 23:00까지 · 시부야 숙소에서 도보 1분" },
       { group: "meal", name: "오레류 시오라멘 (라멘) 🍜", url: "https://maps.google.com/?cid=5531291014483696484", memo: "★4.4 · 일반 테이블석" },
       { name: "초네 (닌교초) 🍡", url: "https://maps.google.com/?cid=5794026808577077147", memo: "시라타마 오구라 안미츠" },
       { name: "아마잇코 (니시오기쿠보) 🍧", url: "https://maps.google.com/?cid=16955808462236171765", memo: "빙수" },
