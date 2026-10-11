@@ -277,7 +277,7 @@
     return url;
   }
 
-  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath, reviewers, groups }) {
+  function makeChecklist({ viewId, title, items: raw, path, storeKey, oldStoreKey, allOnMap, myMapUrl, reviewsPath, reviewers, groups, checkedFirst }) {
     const view = $(viewId);
     const entries = raw.map((c) => (typeof c === "string" ? { name: c } : c));
     const items = entries.map((c) => c.name);
@@ -348,6 +348,10 @@
       return `<div class="filter" role="tablist">${chips.map((c) =>
         `<button role="tab" data-filter="${esc(c.key)}" class="${filter === c.key ? "on" : ""}" aria-selected="${filter === c.key}">${esc(c.label)} <small>${c.n}</small></button>`).join("")}</div>`;
     }
+    // checkedFirst: 체크한 항목을 묶음 맨 위로 (나머지는 원래 순서 유지)
+    const ordered = (list) => checkedFirst
+      ? list.filter((c) => checks[fbKey(c.name)]).concat(list.filter((c) => !checks[fbKey(c.name)]))
+      : list;
     function itemHtml(c) {
       const on = !!checks[fbKey(c.name)];
       return `
@@ -377,7 +381,7 @@
         ${filterHtml()}
         ${sections.filter((s, i) => filter === "all" || groups[i].key === filter).map((s) => `
           ${s.title ? `<h3 class="grp">${esc(s.title)} <small>${s.list.filter((c) => checks[fbKey(c.name)]).length} / ${s.list.length}</small></h3>` : ""}
-          <ul class="list check">${s.list.map(itemHtml).join("")}</ul>`).join("")}`;
+          <ul class="list check">${ordered(s.list).map(itemHtml).join("")}</ul>`).join("")}`;
       const inp = view.querySelector(".review-in");
       if (inp && (focusEdit || hadFocus)) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); focusEdit = false; }
     }
@@ -477,6 +481,7 @@
       reviewsPath: trip.food.reviewsPath,
       reviewers: trip.food.reviewers,
       groups: trip.food.groups,
+      checkedFirst: true,
       allOnMap: true,
       myMapUrl: trip.food.myMapUrl
     })
