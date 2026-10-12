@@ -127,6 +127,13 @@ window.TRIP = {
     path: "trips/gaeul-tokyo-2026/checklist"
   },
 
+  // 정보 탭 맨 위 "여행 총평" · 사람별 한 줄 (Firebase reviews 규칙에 맞춘 경로)
+  summary: {
+    title: "📝 여행 총평",
+    path: "trips/gaeul-tokyo-2026-summary/reviews",
+    people: ["성민", "가을", "지숙"]
+  },
+
   // 정보 탭 "참고 블로그" · { title, url, memo } (비어 있으면 섹션이 보이지 않음)
   blogs: [
     { title: "나리타공항에서 디즈니랜드 가는법", url: "https://m.blog.naver.com/ahyoniii/223134815284" },

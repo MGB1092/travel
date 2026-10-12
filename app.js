@@ -500,10 +500,91 @@
 
   renderDay();
   renderInfo();
+
+  // 여행 총평 · 사람별 한 줄 (음식 탭 한줄평과 같은 방식, 가족 공유)
+  function makeReviewBox({ el, title, path, people, storeKey }) {
+    const box = $(el);
+    if (!box || !people || !people.length) return { render() {}, connect() {} };
+    const URL = trip.shared && trip.shared.dbUrl && path ? `${trip.shared.dbUrl.replace(/\/+$/, "")}/${path}` : null;
+    let reviews = (() => { try { return JSON.parse(localStorage.getItem(storeKey)) || {}; } catch { return {}; } })();
+    const cacheR = () => { try { localStorage.setItem(storeKey, JSON.stringify(reviews)); } catch {} };
+    let state = URL ? "connecting" : "local";
+    let editing = null, draft = "", focusEdit = false;
+
+    function render() {
+      const hadFocus = document.activeElement && box.contains(document.activeElement) && document.activeElement.classList.contains("review-in");
+      box.innerHTML = `
+        <h2>${esc(title)}</h2>
+        ${state === "denied" ? `<p class="sync sync-offline">⚠️ 총평은 아직 이 기기에만 저장돼요</p>` : ""}
+        <div class="summary-card"><div class="review-area">${people.map((who) => {
+          const k = fbKey(who);
+          const label = `<b class="who">${esc(who)}</b>`;
+          if (editing === k) return `
+            <div class="review-row review-edit" data-who="${esc(who)}">${label}
+              <input class="review-in" maxlength="100" placeholder="${esc(who)}의 여행 총평 (100자까지)" value="${esc(draft)}">
+              <button data-act="save">저장</button><button data-act="cancel" class="ghost">취소</button>
+            </div>`;
+          return reviews[k]
+            ? `<div class="review-row" data-who="${esc(who)}">${label}<p class="review">💬 ${esc(reviews[k])}</p><button data-act="edit" class="ghost" aria-label="수정">✏️</button></div>`
+            : `<div class="review-row" data-who="${esc(who)}">${label}<button data-act="edit" class="review-add">💬 총평 쓰기</button></div>`;
+        }).join("")}</div></div>`;
+      const inp = box.querySelector(".review-in");
+      if (inp && (focusEdit || hadFocus)) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); focusEdit = false; }
+    }
+    function save(k, text) {
+      text = text.trim().slice(0, 100);
+      if (text) reviews[k] = text; else delete reviews[k];
+      cacheR(); editing = null; render();
+      if (URL) {
+        fetch(`${URL}/${encodeURIComponent(k)}.json`, text ? { method: "PUT", body: JSON.stringify(text) } : { method: "DELETE" })
+          .then((r) => { if (r.status === 401 || r.status === 403) throw "denied"; if (!r.ok) throw r.status; })
+          .catch((err) => { if (err === "denied") { state = "denied"; render(); } });
+      }
+    }
+    box.addEventListener("input", (e) => { if (e.target.classList.contains("review-in")) draft = e.target.value; });
+    box.addEventListener("keydown", (e) => {
+      if (!e.target.classList.contains("review-in")) return;
+      if (e.key === "Enter" && !e.isComposing) { e.preventDefault(); save(editing, draft); }
+      if (e.key === "Escape") { editing = null; render(); }
+    });
+    box.addEventListener("click", (e) => {
+      const act = e.target.closest("button[data-act]")?.dataset.act;
+      const who = e.target.closest(".review-row")?.dataset.who;
+      if (!act || !who) return;
+      const k = fbKey(who);
+      if (act === "edit") { editing = k; draft = reviews[k] || ""; focusEdit = true; render(); }
+      else if (act === "cancel") { editing = null; render(); }
+      else if (act === "save") save(k, draft);
+    });
+    function connect() {
+      if (!URL || !window.EventSource) return;
+      const es = new EventSource(`${URL}.json`);
+      const on = (merge) => (ev) => {
+        try {
+          const m = JSON.parse(ev.data); state = "live";
+          if (m.path === "/") reviews = merge ? Object.assign(reviews, m.data || {}) : (m.data && typeof m.data === "object" ? { ...m.data } : {});
+          else reviews[decodeURIComponent(m.path.slice(1).split("/")[0])] = m.data;
+          Object.keys(reviews).forEach((k) => { if (reviews[k] == null) delete reviews[k]; });
+          cacheR(); render();
+        } catch {}
+      };
+      es.addEventListener("put", on(false));
+      es.addEventListener("patch", on(true));
+      es.onerror = () => { if (es.readyState === EventSource.CLOSED && state !== "live") { state = "denied"; render(); } };
+    }
+    return { render, connect };
+  }
+  const summary = makeReviewBox({
+    el: "summary-box", title: trip.summary?.title || "여행 총평",
+    path: trip.summary?.path, people: trip.summary?.people, storeKey: "trip-summary:" + trip.title
+  });
+
   lists.forEach((l) => l.render());
+  summary.render();
   renderFx();
   loadForecast();
   loadClimate();
   loadFx();
   lists.forEach((l) => l.connect());
+  summary.connect();
 })();
