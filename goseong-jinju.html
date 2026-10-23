@@ -74,6 +74,19 @@
     @keyframes nod { 0%, 60%, 100% { transform: rotate(0); } 75% { transform: rotate(-8deg); } 85% { transform: rotate(3deg); } }
     @media (prefers-reduced-motion: reduce) { .herd svg { animation: none !important; } }
 
+    /* 정보 탭: 공룡엑스포 안내 */
+    .expo-note { font-size: 13px; color: var(--muted); margin: -6px 0 12px; }
+    .expo-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: 0 1px 0 var(--line); margin-bottom: 16px; font-size: 14px; }
+    .expo-table th, .expo-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .expo-table tr:last-child td { border-bottom: 0; }
+    .expo-table th { background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 13px; }
+    .expo-table td:first-child { white-space: nowrap; font-family: var(--serif); color: var(--primary); }
+    .expo-table td:last-child { color: var(--muted); font-size: 12px; }
+    .expo-sub { font-family: var(--serif); font-size: 17px; font-weight: 400; margin: 18px 0 10px; }
+    .expo-tips { margin: 0 0 12px; padding: 12px 14px 12px 30px; background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 0 var(--line); font-size: 14px; }
+    .expo-tips li { margin: 3px 0; }
+    .expo-tel { display: inline-block; margin: 0 0 12px; color: var(--primary); }
+
     .card .time { font-size: 15px; }
     .tabs button.active { box-shadow: 0 2px 0 rgba(0,0,0,.08); }
     @media (prefers-color-scheme: dark) {
@@ -155,6 +168,7 @@
     <section id="day-view"></section>
     <section id="info-view" hidden>
       <div id="summary-box"></div>
+      <div id="expo-box"></div>
       <div id="wx-box"></div>
       <div id="fx-box"></div>
       <div id="info-box"></div>
@@ -174,6 +188,32 @@
   <script>
     document.write('<script src="goseong-jinju.js?v=' + V + '"><\/script>' +
                    '<script src="app.js?v=' + V + '"><\/script>');
+  </script>
+  <script>
+    // 정보 탭 "공룡엑스포 안내" — 이 페이지에서만 그림 (공용 app.js 는 그대로)
+    (function () {
+      const X = window.TRIP && window.TRIP.expo, box = document.getElementById("expo-box");
+      if (!X || !box) return;
+      const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      box.innerHTML = `
+        <h2>${esc(X.title)}</h2>
+        ${X.note ? `<p class="expo-note">${esc(X.note)}</p>` : ""}
+        <table class="expo-table">
+          <thead><tr><th>시간</th><th>프로그램</th><th>비고</th></tr></thead>
+          <tbody>${X.schedule.map((r) => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
+        </table>
+        <h3 class="expo-sub">주요 체험 · 볼거리</h3>
+        <ul class="list">${X.programs.map((p) => `
+          <li><div class="emoji">${p.icon}</div><div>
+            <div class="value">${esc(p.name)}</div>
+            ${p.memo ? `<div class="label">${esc(p.memo)}</div>` : ""}
+          </div></li>`).join("")}
+        </ul>
+        <h3 class="expo-sub">입장권 · 관람 팁</h3>
+        <ul class="expo-tips">${X.tips.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+        ${X.tel ? `<a class="expo-tel" href="tel:${esc(X.tel)}">📞 문의 ${esc(X.telLabel || X.tel)}</a>` : ""}
+        ${X.link ? `<a class="btn-link" href="${esc(X.link.url)}" target="_blank" rel="noopener">🦕 ${esc(X.link.label)} ↗</a>` : ""}`;
+    })();
   </script>
 </body>
 </html>
