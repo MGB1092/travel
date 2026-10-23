@@ -4,6 +4,8 @@
 
 - `itinerary.js` — 여행 제목·날짜·일정·정보·준비물 데이터 (이 파일만 수정하면 됩니다)
 - `index.html`, `style.css`, `app.js` — 화면
+- `home.html` — 여행 목록 대시보드 (카드를 누르면 각 여행 페이지로 이동). 새 여행 페이지를 만들면 `home.html`의 `TRIPS` 목록에 한 줄 추가
+- `goseong-jinju.html` + `goseong-jinju.js` — 고성·진주 1박2일 여행 (화면은 `app.js`·`style.css` 공용). 새 여행도 이 두 파일을 복사해서 만들면 됩니다
 
 ## 기능
 - 출발까지 D-day / 여행 중 N일차 표시

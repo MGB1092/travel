@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7a2320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>가을이네 여행 기록</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+  <style>
+    :root {
+      --bg: #f6efe3;
+      --card: #fffaf1;
+      --text: #2d2420;
+      --muted: #8a796b;
+      --line: #e7d9c4;
+      --primary: #a8322d;
+      --primary-soft: #f5e1d5;
+      --now: #d2691e;
+      --radius: 14px;
+      --serif: "Noto Serif KR", "Shippori Mincho", serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1b1613;
+        --card: #271f1a;
+        --text: #efe5d6;
+        --muted: #a8978a;
+        --line: #3e3229;
+        --primary: #e27a66;
+        --primary-soft: #45271f;
+        --now: #f0a05a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0 auto; max-width: 560px;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(140, 100, 60, .06) 1px, transparent 1px);
+      background-size: 6px 6px;
+      color: var(--text);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .hero {
+      color: #fff8ee;
+      padding: calc(32px + env(safe-area-inset-top)) 20px 28px;
+      background: linear-gradient(165deg, #5e1a1a 0%, #a8322d 50%, #d2691e 100%);
+      border-radius: 0 0 22px 22px;
+    }
+    .hero h1 { margin: 0 0 4px; font-family: var(--serif); font-size: 26px; line-height: 1.35; word-break: keep-all; }
+    .hero p { margin: 0; opacity: .9; font-size: 14px; }
+    main { padding: 18px 16px 24px; }
+    h2 {
+      font-family: var(--serif); font-size: 19px; margin: 6px 0 14px;
+      padding-left: 12px; border-left: 4px solid var(--primary);
+    }
+    .trips { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 14px; }
+    .trip {
+      display: flex; gap: 14px; align-items: center;
+      background: var(--card); border-radius: var(--radius);
+      padding: 12px; color: inherit; text-decoration: none;
+      box-shadow: 0 1px 0 var(--line), 0 2px 8px rgba(90, 50, 20, .06);
+      transition: transform .15s;
+    }
+    .trip:active { transform: scale(.98); }
+    .thumb {
+      flex: 0 0 84px; height: 84px; border-radius: 10px; overflow: hidden;
+      display: grid; place-items: center; font-size: 36px;
+      background: var(--primary-soft);
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .body { flex: 1; min-width: 0; }
+    .badge {
+      display: inline-block; font-family: var(--serif); font-weight: 700; font-size: 12px;
+      color: var(--primary); border: 1.5px solid currentColor;
+      padding: 1px 8px; border-radius: 4px;
+    }
+    .badge.now { color: var(--now); }
+    .badge.done { color: var(--muted); }
+    .title { margin: 6px 0 2px; font-family: var(--serif); font-size: 17px; font-weight: 700; line-height: 1.35; word-break: keep-all; }
+    .sub { margin: 0; font-size: 13px; color: var(--muted); }
+    .go { flex: 0 0 auto; color: var(--muted); font-size: 20px; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>가을이네 여행 기록</h1>
+    <p>카드를 누르면 여행별 일정을 볼 수 있어요</p>
+  </header>
+  <main id="list"></main>
+
+  <script>
+    // 여행 목록 — 새 여행 페이지를 만들면 여기에 한 줄 추가하세요.
+    // url: 여행 페이지 주소, photo: 카드 사진 (없으면 emoji 표시)
+    const TRIPS = [
+      { title: "가을이네 가족 도쿄 4박5일 여행", subtitle: "秋の東京 · 단풍 물든 도쿄로",
+        startDate: "2026-10-08", endDate: "2026-10-12", url: "index.html", photo: "images/family.jpg", emoji: "🗼" },
+      { title: "가을이네 고성 · 진주 1박2일 여행", subtitle: "공룡 발자국 따라 고성, 남강 따라 진주",
+        startDate: "2026-10-24", endDate: "2026-10-25", url: "goseong-jinju.html", emoji: "🦕" }
+    ];
+
+    const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+    const parseDate = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+    const fmtDate = (s) => { const d = parseDate(s); return `${d.getFullYear()}. ${d.getMonth() + 1}/${d.getDate()}(${WEEK[d.getDay()]})`; };
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const t = new Date();
+    const today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+
+    function status(trip) {
+      const diff = Math.round((parseDate(trip.startDate) - today) / 86400000);
+      if (diff > 0) return { group: "upcoming", text: `D-${diff}`, cls: "" };
+      if (today <= parseDate(trip.endDate)) return { group: "upcoming", text: `여행 ${1 - diff}일차`, cls: "now" };
+      return { group: "done", text: "여행 완료 🎉", cls: "done" };
+    }
+    function card(trip) {
+      const s = status(trip);
+      const nights = Math.round((parseDate(trip.endDate) - parseDate(trip.startDate)) / 86400000);
+      return `
+        <li><a class="trip" href="${esc(trip.url)}">
+          <div class="thumb">${trip.photo ? `<img src="${esc(trip.photo)}" alt="" loading="lazy">` : esc(trip.emoji || "✈️")}</div>
+          <div class="body">
+            <span class="badge ${s.cls}">${s.text}</span>
+            <p class="title">${esc(trip.title)}</p>
+            <p class="sub">${fmtDate(trip.startDate)} – ${fmtDate(trip.endDate).slice(6)} · ${nights}박 ${nights + 1}일</p>
+            ${trip.subtitle ? `<p class="sub">${esc(trip.subtitle)}</p>` : ""}
+          </div>
+          <span class="go" aria-hidden="true">›</span>
+        </a></li>`;
+    }
+
+    // 다가오는 여행은 가까운 날짜 순, 다녀온 여행은 최근 순
+    const up = TRIPS.filter((x) => status(x).group === "upcoming").sort((a, b) => a.startDate.localeCompare(b.startDate));
+    const done = TRIPS.filter((x) => status(x).group === "done").sort((a, b) => b.startDate.localeCompare(a.startDate));
+    document.getElementById("list").innerHTML =
+      (up.length ? `<h2>다가오는 여행</h2><ul class="trips">${up.map(card).join("")}</ul>` : "") +
+      (done.length ? `<h2>다녀온 여행</h2><ul class="trips">${done.map(card).join("")}</ul>` : "");
+  </script>
+</body>
+</html>
