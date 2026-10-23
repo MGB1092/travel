@@ -58,29 +58,21 @@
     .scene .sea { fill: rgba(255,255,255,.22); }
     .scene .sea2 { fill: rgba(255,255,255,.14); }
 
-    /* 바닷가에 서 있는 브라키오사우루스 (실루엣) */
-    .hero > .dino {
-      position: absolute !important; z-index: 1 !important; right: 6px; bottom: 30px;
-      width: 150px; height: 112px; pointer-events: none;
+    /* 해변의 공룡 친구들 (통통 뛰는 움직임) */
+    .hero { padding-bottom: 92px; }
+    .hero > .herd {
+      position: absolute !important; z-index: 2 !important;
+      right: 10px; bottom: 6px;
+      display: flex; align-items: flex-end; gap: 6px; pointer-events: none;
     }
-    .dino path, .dino ellipse, .dino rect { fill: #08303a; opacity: .5; }
-    .dino .eye { fill: #fff; opacity: .7; }
-    .hero h1, .hero .sub { margin-right: 96px; }
-
-    /* 해변을 걸어가는 작은 티라노 */
-    .hero > .walker {
-      position: absolute !important; z-index: 2; bottom: 10px; left: 100%;
-      font-size: 22px; pointer-events: none;
-      animation: walk 18s linear infinite;
-    }
-    @keyframes walk {
-      0%   { transform: translateX(0) translateY(0); }
-      5%   { transform: translateX(-5vw) translateY(-3px); }
-      10%  { transform: translateX(-10vw) translateY(0); }
-      100% { transform: translateX(calc(-100vw - 60px)) translateY(0); }
-    }
-    @media (min-width: 560px) { @keyframes walk { to { transform: translateX(-620px); } } }
-    @media (prefers-reduced-motion: reduce) { .walker { display: none; } }
+    .herd svg { display: block; overflow: visible; animation: hop 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+    .herd .o { stroke: #08303a; stroke-width: 1.6; stroke-linejoin: round; }
+    .herd .ankylo { width: 84px; height: 42px; animation-delay: -.4s; }
+    .herd .trike  { width: 100px; height: 58px; animation-delay: -1.3s; }
+    .herd .pachy  { width: 62px; height: 62px; animation: nod 1.8s ease-in-out infinite; }
+    @keyframes hop { 0%, 70%, 100% { transform: translateY(0); } 80% { transform: translateY(-6px); } 90% { transform: translateY(0) scaleY(.96); } }
+    @keyframes nod { 0%, 60%, 100% { transform: rotate(0); } 75% { transform: rotate(-8deg); } 85% { transform: rotate(3deg); } }
+    @media (prefers-reduced-motion: reduce) { .herd svg { animation: none !important; } }
 
     .card .time { font-size: 15px; }
     .tabs button.active { box-shadow: 0 2px 0 rgba(0,0,0,.08); }
@@ -97,18 +89,57 @@
     <h1 id="title"></h1>
     <p class="sub" id="subtitle"></p>
     <p class="range" id="range"></p>
-    <svg class="dino" viewBox="0 0 160 120" aria-hidden="true">
-      <path d="M68 74 Q54 42 44 16 L56 11 Q66 40 90 66 Z"/>
-      <ellipse cx="46" cy="13" rx="12" ry="7"/>
-      <ellipse cx="100" cy="80" rx="40" ry="21"/>
-      <path d="M136 76 Q152 84 160 100 Q146 90 130 88 Z"/>
-      <rect x="72" y="88" width="10" height="26" rx="4"/>
-      <rect x="88" y="90" width="10" height="24" rx="4"/>
-      <rect x="110" y="90" width="10" height="24" rx="4"/>
-      <rect x="124" y="86" width="10" height="28" rx="4"/>
-      <circle class="eye" cx="42" cy="11" r="1.6"/>
-    </svg>
-    <span class="walker" aria-hidden="true">🦖</span>
+    <!-- 가을이가 좋아하는 공룡 셋: 안킬로사우루스 · 트리케라톱스 · 파키케팔로사우루스 -->
+    <div class="herd">
+      <svg class="ankylo" role="img" aria-label="안킬로사우루스" viewBox="0 0 120 60">
+      <g class="o">
+      <path fill="#b88c4e" d="M101 40 Q110 40 113 34" stroke-width="5" stroke-linecap="round"/>
+      <path fill="none" d="M101 40 Q110 40 113 34"/>
+      <ellipse cx="114" cy="33" rx="6.5" ry="5.5" fill="#8a6a3b"/>
+      <rect x="30" y="40" width="9" height="15" rx="3" fill="#7a5c32"/>
+      <rect x="44" y="41" width="9" height="14" rx="3" fill="#8a6a3b"/>
+      <rect x="80" y="41" width="9" height="14" rx="3" fill="#7a5c32"/>
+      <rect x="92" y="40" width="9" height="15" rx="3" fill="#8a6a3b"/>
+      <path fill="#a77d43" d="M22 44 Q28 14 62 13 Q98 13 106 44 Z"/>
+      <path fill="#f3e3c0" d="M30 30 L24 24 L35 25 Z M44 19 L40 11 L50 16 Z M62 14 L62 5 L69 14 Z M80 16 L85 8 L87 18 Z M96 26 L104 21 L100 31 Z"/>
+      <path fill="#f3e3c0" d="M24 44 L17 47 L26 47 Z M104 44 L111 47 L102 47 Z"/>
+      <ellipse cx="16" cy="40" rx="11" ry="8" fill="#a77d43"/>
+      </g>
+      <g fill="#d4ab6a"><circle cx="48" cy="28" r="3.5"/><circle cx="62" cy="23" r="3.5"/><circle cx="76" cy="28" r="3.5"/><circle cx="55" cy="36" r="3"/><circle cx="69" cy="36" r="3"/><circle cx="88" cy="35" r="3"/><circle cx="38" cy="36" r="3"/></g>
+      <circle cx="13" cy="37" r="2.2" fill="#fff"/><circle cx="12.5" cy="37" r="1.1" fill="#08303a"/>
+      </svg>
+      <svg class="trike" role="img" aria-label="트리케라톱스" viewBox="0 0 120 70">
+      <g class="o">
+      <path fill="#d9772f" d="M100 36 Q116 38 120 50 Q108 47 98 47 Z"/>
+      <rect x="80" y="48" width="11" height="20" rx="4" fill="#c4682a"/>
+      <rect x="56" y="48" width="11" height="20" rx="4" fill="#c4682a"/>
+      <ellipse cx="72" cy="38" rx="32" ry="20" fill="#e98b3a"/>
+      <rect x="92" y="47" width="11" height="21" rx="4" fill="#e98b3a"/>
+      <rect x="44" y="47" width="11" height="21" rx="4" fill="#e98b3a"/>
+      <path fill="#f6c25e" d="M30 44 Q22 18 40 8 Q58 10 56 30 Q54 44 40 48 Z"/>
+      <path fill="#fff3d6" d="M27 30 L10 10 L33 27 Z M35 28 L22 6 L39 26 Z M12 35 L4 26 L15 33 Z"/>
+      <ellipse cx="24" cy="38" rx="17" ry="11" fill="#e98b3a"/>
+      <path fill="#fff3d6" d="M8 36 Q1 40 7 46 Q11 43 10 38 Z"/>
+      </g>
+      <g fill="#f6c25e" opacity=".7"><circle cx="40" cy="15" r="2"/><circle cx="50" cy="18" r="2"/><circle cx="52" cy="30" r="2"/></g>
+      <circle cx="23" cy="34" r="2.6" fill="#fff"/><circle cx="22.4" cy="34" r="1.3" fill="#08303a"/>
+      </svg>
+      <svg class="pachy" role="img" aria-label="파키케팔로사우루스" viewBox="0 0 90 90">
+      <g class="o">
+      <path fill="#6f7fd6" d="M58 42 Q82 44 90 58 Q76 54 58 56 Z"/>
+      <path fill="#5262b8" d="M40 58 L42 80 L36 84 L46 84 L48 78 L48 58 Z"/>
+      <path fill="#6f7fd6" d="M26 28 Q32 38 40 40 L46 32 Q38 28 34 22 Z"/>
+      <ellipse cx="48" cy="46" rx="18" ry="14" fill="#6f7fd6" transform="rotate(-20 48 46)"/>
+      <ellipse cx="54" cy="56" rx="9" ry="11" fill="#6f7fd6"/>
+      <path fill="#6f7fd6" d="M52 62 L50 82 L43 86 L56 86 L58 80 L60 62 Z"/>
+      <path fill="none" stroke-width="3" stroke-linecap="round" d="M36 46 L30 52"/>
+      <path fill="#6f7fd6" d="M3 30 Q1 23 9 21 Q12 8 24 7 Q37 8 37 22 Q37 31 28 33 Q14 37 3 30 Z"/>
+      <path fill="#aab4f2" d="M9 21 Q12 8 24 7 Q37 8 37 22 Q25 16 9 21 Z"/>
+      </g>
+      <g fill="#fff3d6" class="o" stroke-width="1"><circle cx="38" cy="18" r="2"/><circle cx="37" cy="25" r="2"/><circle cx="34" cy="11" r="2"/><circle cx="7" cy="22" r="1.6"/></g>
+      <circle cx="15" cy="26" r="2.4" fill="#fff"/><circle cx="14.4" cy="26" r="1.2" fill="#08303a"/>
+      </svg>
+    </div>
     <svg class="scene" viewBox="0 0 390 72" preserveAspectRatio="none" aria-hidden="true">
       <!-- 남해안 섬 · 바다 물결 -->
       <path class="fuji" d="M0 72 L0 46 Q60 22 120 40 Q170 18 230 36 Q290 14 390 40 L390 72 Z"/>
