@@ -116,10 +116,27 @@ window.TRIP = {
     path: "trips/gaeul-goseong-jinju-2026-food/checklist",
     reviewsPath: "trips/gaeul-goseong-jinju-2026-food/reviews",
     reviewers: ["지숙", "성민"],
+    // 고성 / 진주로 나눠 보기 (검색으로 찾은 곳이라 가기 전에 영업 여부 확인)
+    groups: [
+      { key: "goseong", title: "🦕 고성 · 당항포 근처", short: "🦕 고성" },
+      { key: "jinju", title: "🏯 진주", short: "🏯 진주" }
+    ],
     items: [
-      { name: "하연옥 (진주냉면 · 육전) 🍜", place: "하연옥 본점 진주", memo: "해물 육수 진주냉면 · 육전" },
-      { name: "천황식당 (진주비빔밥) 🍚", place: "천황식당 진주", memo: "오래된 진주비빔밥집" },
-      { name: "제일식당 (진주비빔밥 · 해장국) 🍲", place: "제일식당 진주중앙시장", memo: "진주중앙시장 안" }
+      { group: "goseong", name: "엑스포장 안 먹거리 🦕", memo: "행사장 안 식당·매점 · 공룡빵 · 디노카페" },
+      { group: "goseong", name: "당항포그린횟집 🐟", place: "당항포그린횟집, 경남 고성군 회화면 당항만로 967",
+        memo: "고성군 모범음식점 · 회덮밥 · 매운탕 · 바다 전망 · 엑스포장 근처 · ☎ 055-673-2456" },
+      { group: "goseong", name: "둘리왕새우 🦐", place: "둘리왕새우 경남 고성군 회화면",
+        memo: "대하구이 · 당항포관광지 근처 · 다이닝코드 ★4.6" },
+      { group: "goseong", name: "바다횟집 🌊", place: "바다횟집, 경남 고성군 회화면 당항만로 1037",
+        memo: "물회 · 바다 전망 · 회화면 당항만로 1037" },
+      { group: "goseong", name: "통영짬뽕 🍜", place: "통영짬뽕 경남 고성군 회화면 당항리",
+        memo: "짬뽕 · 회화면 당항리 · 다이닝코드 ★4.3" },
+      { group: "jinju", name: "하연옥 (진주냉면 · 육전) 🍜", place: "하연옥 본점, 경남 진주시 진주대로 1317-20",
+        memo: "육전 올린 진주냉면으로 유명 · 80년 전통 · 대기 있을 수 있음" },
+      { group: "jinju", name: "황포냉면 🍜", place: "황포냉면 진주", memo: "현지인 입소문 진주냉면 · 양 푸짐" },
+      { group: "jinju", name: "진주냉면 산홍 본점 🍜", place: "진주냉면 산홍 본점", memo: "진주 교방음식 연구가가 운영 · 밑반찬 푸짐" },
+      { group: "jinju", name: "천황식당 (진주비빔밥) 🍚", place: "천황식당 진주", memo: "육회비빔밥 · 냉면 · 평일에도 대기 있음" },
+      { group: "jinju", name: "제일식당 (진주비빔밥 · 해장국) 🍲", place: "제일식당 진주중앙시장", memo: "진주중앙시장 안 · 육회비빔밥 · 선지국밥" }
     ]
   },
 
