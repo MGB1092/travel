@@ -82,6 +82,21 @@
     .expo-table td:first-child { white-space: nowrap; font-family: var(--serif); color: var(--primary); }
     .expo-table td:last-child { color: var(--muted); font-size: 12px; }
     .expo-sub { font-family: var(--serif); font-size: 17px; font-weight: 400; margin: 18px 0 10px; }
+    .expo-sub small { font-family: inherit; font-size: 13px; color: var(--muted); margin-left: 4px; }
+    .expo-food td:first-child { white-space: normal; font-family: inherit; color: var(--text); }
+    .expo-menu { background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 0 var(--line); margin-bottom: 8px; }
+    .expo-menu summary { padding: 12px 14px; cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 8px; }
+    .expo-menu summary::-webkit-details-marker { display: none; }
+    .expo-menu summary::after { content: "▾"; margin-left: auto; color: var(--muted); }
+    .expo-menu[open] summary::after { content: "▴"; }
+    .expo-menu summary b { font-family: var(--serif); font-weight: 400; font-size: 16px; color: var(--primary); }
+    .expo-menu summary span { font-size: 12px; color: var(--muted); }
+    .expo-menu ul { list-style: none; margin: 0; padding: 0 14px 6px; }
+    .expo-menu li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 14px; }
+    .expo-menu li b { font-weight: 600; white-space: nowrap; }
+    .expo-menu a { display: inline-block; margin: 0 14px 12px; font-size: 13px; color: var(--primary); }
+    .expo-food td:first-child b { font-weight: 600; color: var(--primary); font-size: 12px; }
+    .expo-food td:nth-child(2) { white-space: nowrap; font-family: var(--serif); color: var(--primary); }
     .expo-tips { margin: 0 0 12px; padding: 12px 14px 12px 30px; background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 0 var(--line); font-size: 14px; }
     .expo-tips li { margin: 3px 0; }
     .expo-tel { display: inline-block; margin: 0 0 12px; color: var(--primary); }
@@ -157,6 +172,21 @@
           <thead><tr><th>시간</th><th>프로그램</th><th>비고</th></tr></thead>
           <tbody>${X.schedule.map((r) => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
         </table>
+        ${X.food ? `
+        <h3 class="expo-sub">🍽️ 먹거리 운영 시간 <small>토요일 (야간 개장)</small></h3>
+        <table class="expo-table expo-food">
+          <thead><tr><th>시설</th><th>시간</th><th>비고</th></tr></thead>
+          <tbody>${X.food.map((r) => `<tr><td><b>${esc(r[0])}</b><br>${esc(r[1])}</td><td>${esc(r[2])}–${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("")}</tbody>
+        </table>` : ""}
+        ${X.menus ? `
+        <h3 class="expo-sub">🍚 식당 메뉴 · 가격 <small>눌러서 펼치기</small></h3>
+        ${X.menuTip ? `<p class="expo-note">${esc(X.menuTip)}</p>` : ""}
+        ${X.menus.map((m) => `
+        <details class="expo-menu">
+          <summary><b>${esc(m.name)}</b> <span>${esc(m.where)}</span></summary>
+          <ul>${m.items.map((it) => `<li><span>${esc(it[0])}</span><b>${esc(it[1])}원</b></li>`).join("")}</ul>
+          ${m.tel ? `<a href="tel:${esc(m.tel.replace(/-/g, ""))}">📞 단체 문의 ${esc(m.tel)}</a>` : ""}
+        </details>`).join("")}` : ""}
         <h3 class="expo-sub">주요 체험 · 볼거리</h3>
         <ul class="list">${X.programs.map((p) => `
           <li><div class="emoji">${p.icon}</div><div>
