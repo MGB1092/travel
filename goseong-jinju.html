@@ -152,6 +152,7 @@
       box.innerHTML = `
         <h2>${esc(X.title)}</h2>
         ${X.note ? `<p class="expo-note">${esc(X.note)}</p>` : ""}
+        ${X.link ? `<a class="btn-link" href="${esc(X.link.url)}" target="_blank" rel="noopener">🦕 엑스포 공식 사이트 열기 ↗</a>` : ""}
         <table class="expo-table">
           <thead><tr><th>시간</th><th>프로그램</th><th>비고</th></tr></thead>
           <tbody>${X.schedule.map((r) => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
