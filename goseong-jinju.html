@@ -59,17 +59,16 @@
     .scene .sea2 { fill: rgba(255,255,255,.14); }
 
     /* 해변의 공룡 친구들 (통통 뛰는 움직임) */
-    .hero { padding-bottom: 92px; }
+    .hero { padding-bottom: 96px; }
     .hero > .herd {
       position: absolute !important; z-index: 2 !important;
-      right: 10px; bottom: 6px;
+      right: 8px; bottom: 4px;
       display: flex; align-items: flex-end; gap: 6px; pointer-events: none;
     }
     .herd svg { display: block; overflow: visible; animation: hop 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
-    .herd .o { stroke: #08303a; stroke-width: 1.6; stroke-linejoin: round; }
-    .herd .ankylo { width: 84px; height: 42px; animation-delay: -.4s; }
-    .herd .trike  { width: 100px; height: 58px; animation-delay: -1.3s; }
-    .herd .pachy  { width: 62px; height: 62px; animation: nod 1.8s ease-in-out infinite; }
+    .herd .ankylo { width: 92px; height: 60px; animation-delay: -.4s; }
+    .herd .trike  { width: 104px; height: 68px; animation-delay: -1.3s; }
+    .herd .pachy  { width: 66px; height: 66px; animation: nod 1.8s ease-in-out infinite; }
     @keyframes hop { 0%, 70%, 100% { transform: translateY(0); } 80% { transform: translateY(-6px); } 90% { transform: translateY(0) scaleY(.96); } }
     @keyframes nod { 0%, 60%, 100% { transform: rotate(0); } 75% { transform: rotate(-8deg); } 85% { transform: rotate(3deg); } }
     @media (prefers-reduced-motion: reduce) { .herd svg { animation: none !important; } }
@@ -104,53 +103,62 @@
     <p class="range" id="range"></p>
     <!-- 가을이가 좋아하는 공룡 셋: 안킬로사우루스 · 트리케라톱스 · 파키케팔로사우루스 -->
     <div class="herd">
-      <svg class="ankylo" role="img" aria-label="안킬로사우루스" viewBox="0 0 120 60">
-      <g class="o">
-      <path fill="#b88c4e" d="M101 40 Q110 40 113 34" stroke-width="5" stroke-linecap="round"/>
-      <path fill="none" d="M101 40 Q110 40 113 34"/>
-      <ellipse cx="114" cy="33" rx="6.5" ry="5.5" fill="#8a6a3b"/>
-      <rect x="30" y="40" width="9" height="15" rx="3" fill="#7a5c32"/>
-      <rect x="44" y="41" width="9" height="14" rx="3" fill="#8a6a3b"/>
-      <rect x="80" y="41" width="9" height="14" rx="3" fill="#7a5c32"/>
-      <rect x="92" y="40" width="9" height="15" rx="3" fill="#8a6a3b"/>
-      <path fill="#a77d43" d="M22 44 Q28 14 62 13 Q98 13 106 44 Z"/>
-      <path fill="#f3e3c0" d="M30 30 L24 24 L35 25 Z M44 19 L40 11 L50 16 Z M62 14 L62 5 L69 14 Z M80 16 L85 8 L87 18 Z M96 26 L104 21 L100 31 Z"/>
-      <path fill="#f3e3c0" d="M24 44 L17 47 L26 47 Z M104 44 L111 47 L102 47 Z"/>
-      <ellipse cx="16" cy="40" rx="11" ry="8" fill="#a77d43"/>
-      </g>
-      <g fill="#d4ab6a"><circle cx="48" cy="28" r="3.5"/><circle cx="62" cy="23" r="3.5"/><circle cx="76" cy="28" r="3.5"/><circle cx="55" cy="36" r="3"/><circle cx="69" cy="36" r="3"/><circle cx="88" cy="35" r="3"/><circle cx="38" cy="36" r="3"/></g>
-      <circle cx="13" cy="37" r="2.2" fill="#fff"/><circle cx="12.5" cy="37" r="1.1" fill="#08303a"/>
+      <svg class="ankylo" role="img" aria-label="안킬로사우루스" viewBox="0 0 200 130">
+      <path fill="#6e3358" d="M54 92 L70 92 L70 122 L56 122 Z M130 92 L146 92 L146 122 L132 122 Z"/>
+      <path fill="none" stroke="#45496e" stroke-width="18" stroke-linecap="round" d="M160 82 Q184 78 188 54"/>
+      <path fill="none" stroke="#7b7c99" stroke-width="12" stroke-dasharray="8 4" d="M164 80 Q182 76 186 58"/>
+      <ellipse cx="188" cy="44" rx="13" ry="11" fill="#45496e"/>
+      <ellipse cx="185" cy="41" rx="9" ry="7" fill="#7b7c99"/>
+      <path fill="#a65f5c" d="M40 96 Q40 70 70 66 L160 66 Q178 72 176 96 Q150 112 100 110 Q60 110 40 96 Z"/>
+      <path fill="#e3a07f" d="M48 100 Q90 116 152 102 Q124 118 84 116 Q60 112 48 100 Z"/>
+      <path fill="#a65f5c" d="M58 96 L78 96 L78 122 L60 122 Z M136 96 L158 96 L156 122 L138 122 Z"/>
+      <path fill="#7d3f4d" d="M62 104 L74 102 L74 106 L62 108 Z M140 104 L154 102 L154 106 L140 108 Z"/>
+      <path fill="#45496e" d="M34 92 Q40 44 102 40 Q162 40 178 88 Q150 94 102 96 Q60 98 34 92 Z"/>
+      <g fill="#45496e"><circle cx="44" cy="92" r="6"/><circle cx="60" cy="95" r="6"/><circle cx="76" cy="96" r="6"/><circle cx="92" cy="97" r="6"/><circle cx="108" cy="97" r="6"/><circle cx="124" cy="96" r="6"/><circle cx="140" cy="95" r="6"/><circle cx="156" cy="93" r="6"/><circle cx="170" cy="89" r="6"/></g>
+      <path fill="#7b7c99" d="M42 84 Q48 46 102 42 Q156 42 170 80 Q146 86 102 88 Q64 90 42 84 Z"/>
+      <path fill="none" stroke="#45496e" stroke-width="4" stroke-linejoin="round" d="M60 64 L74 58 L88 64 L102 56 L116 64 L130 56 L146 64"/>
+      <path fill="none" stroke="#45496e" stroke-width="4" stroke-linejoin="round" d="M62 78 L78 72 L94 78 L110 72 L126 78 L142 72 L158 78"/>
+      <path fill="#a65f5c" d="M20 92 Q16 76 32 74 L46 76 Q54 88 46 100 Q34 104 22 100 Z"/>
+      <path fill="#6e3358" d="M12 88 L22 84 L24 98 L14 98 Z"/>
+      <ellipse cx="38" cy="92" rx="6" ry="4" fill="#fbe0c6"/>
+      <path fill="#7b7c99" d="M40 76 L50 68 L48 80 Z"/>
+      <circle cx="28" cy="84" r="2.6" fill="#2b2440"/>
       </svg>
-      <svg class="trike" role="img" aria-label="트리케라톱스" viewBox="0 0 120 70">
-      <g class="o">
-      <path fill="#d9772f" d="M100 36 Q116 38 120 50 Q108 47 98 47 Z"/>
-      <rect x="80" y="48" width="11" height="20" rx="4" fill="#c4682a"/>
-      <rect x="56" y="48" width="11" height="20" rx="4" fill="#c4682a"/>
-      <ellipse cx="72" cy="38" rx="32" ry="20" fill="#e98b3a"/>
-      <rect x="92" y="47" width="11" height="21" rx="4" fill="#e98b3a"/>
-      <rect x="44" y="47" width="11" height="21" rx="4" fill="#e98b3a"/>
-      <path fill="#f6c25e" d="M30 44 Q22 18 40 8 Q58 10 56 30 Q54 44 40 48 Z"/>
-      <path fill="#fff3d6" d="M27 30 L10 10 L33 27 Z M35 28 L22 6 L39 26 Z M12 35 L4 26 L15 33 Z"/>
-      <ellipse cx="24" cy="38" rx="17" ry="11" fill="#e98b3a"/>
-      <path fill="#fff3d6" d="M8 36 Q1 40 7 46 Q11 43 10 38 Z"/>
-      </g>
-      <g fill="#f6c25e" opacity=".7"><circle cx="40" cy="15" r="2"/><circle cx="50" cy="18" r="2"/><circle cx="52" cy="30" r="2"/></g>
-      <circle cx="23" cy="34" r="2.6" fill="#fff"/><circle cx="22.4" cy="34" r="1.3" fill="#08303a"/>
+      <svg class="trike" role="img" aria-label="트리케라톱스" viewBox="0 0 200 130">
+      <path fill="#3e6a63" d="M62 88 L78 88 L78 122 L64 122 Z M136 88 L152 88 L152 122 L138 122 Z"/>
+      <path fill="#5d8c80" d="M158 76 Q186 80 198 100 Q180 96 156 96 Z"/>
+      <path fill="#6f9a8d" d="M50 90 Q52 56 100 52 Q156 50 168 84 Q164 106 120 108 L80 108 Q54 106 50 90 Z"/>
+      <path fill="#5d8c80" d="M66 64 Q108 44 160 72 Q120 58 66 70 Z"/>
+      <path fill="#f2d4b0" d="M58 96 Q100 112 162 94 Q152 110 120 112 L80 112 Q62 108 58 96 Z"/>
+      <g fill="none" stroke="#4f7a70" stroke-width="5" stroke-linecap="round"><path d="M100 60 Q104 68 100 76"/><path d="M118 60 Q122 68 118 76"/><path d="M136 64 Q140 72 136 80"/></g>
+      <path fill="#6f9a8d" d="M60 92 L80 92 L80 122 L62 122 Z M138 90 L160 90 L158 122 L140 122 Z"/>
+      <path fill="#fbe8cf" d="M62 118 h18 v4 h-18 Z M140 118 h18 v4 h-18 Z"/>
+      <path fill="#c9772f" d="M54 72 Q42 26 76 18 Q106 26 98 66 Q88 92 64 92 Z"/>
+      <path fill="#e7b24f" d="M60 70 Q50 32 76 26 Q98 32 92 64 Q84 84 66 86 Z"/>
+      <g fill="#fbe8cf"><circle cx="58" cy="44" r="3"/><circle cx="66" cy="28" r="3"/><circle cx="82" cy="24" r="3"/><circle cx="96" cy="36" r="3"/><circle cx="98" cy="54" r="3"/></g>
+      <path fill="#6f9a8d" d="M14 80 Q18 62 38 60 Q60 62 66 80 Q62 98 40 100 Q22 100 14 88 Z"/>
+      <path fill="#3e6a63" d="M4 84 Q6 74 18 74 L20 94 Q8 94 4 84 Z"/>
+      <path fill="#fbe8cf" d="M34 64 L18 30 L46 60 Z M48 62 L42 26 L58 60 Z M18 74 L8 58 L26 72 Z"/>
+      <ellipse cx="50" cy="88" rx="7" ry="5" fill="#8fb5a9"/>
+      <circle cx="36" cy="72" r="2.8" fill="#1f2d2a"/>
       </svg>
-      <svg class="pachy" role="img" aria-label="파키케팔로사우루스" viewBox="0 0 90 90">
-      <g class="o">
-      <path fill="#6f7fd6" d="M58 42 Q82 44 90 58 Q76 54 58 56 Z"/>
-      <path fill="#5262b8" d="M40 58 L42 80 L36 84 L46 84 L48 78 L48 58 Z"/>
-      <path fill="#6f7fd6" d="M26 28 Q32 38 40 40 L46 32 Q38 28 34 22 Z"/>
-      <ellipse cx="48" cy="46" rx="18" ry="14" fill="#6f7fd6" transform="rotate(-20 48 46)"/>
-      <ellipse cx="54" cy="56" rx="9" ry="11" fill="#6f7fd6"/>
-      <path fill="#6f7fd6" d="M52 62 L50 82 L43 86 L56 86 L58 80 L60 62 Z"/>
-      <path fill="none" stroke-width="3" stroke-linecap="round" d="M36 46 L30 52"/>
-      <path fill="#6f7fd6" d="M3 30 Q1 23 9 21 Q12 8 24 7 Q37 8 37 22 Q37 31 28 33 Q14 37 3 30 Z"/>
-      <path fill="#aab4f2" d="M9 21 Q12 8 24 7 Q37 8 37 22 Q25 16 9 21 Z"/>
-      </g>
-      <g fill="#fff3d6" class="o" stroke-width="1"><circle cx="38" cy="18" r="2"/><circle cx="37" cy="25" r="2"/><circle cx="34" cy="11" r="2"/><circle cx="7" cy="22" r="1.6"/></g>
-      <circle cx="15" cy="26" r="2.4" fill="#fff"/><circle cx="14.4" cy="26" r="1.2" fill="#08303a"/>
+      <svg class="pachy" role="img" aria-label="파키케팔로사우루스" viewBox="0 0 140 140">
+      <path fill="#3c5486" d="M68 92 L80 92 L78 126 L84 130 L82 134 L64 134 L66 126 Z"/>
+      <path fill="#5f86b8" d="M86 70 Q120 68 140 92 Q114 86 84 96 Z"/>
+      <path fill="#f6e3c9" d="M90 88 Q114 82 136 92 Q112 90 90 96 Z"/>
+      <path fill="#5f86b8" d="M40 54 Q48 70 60 74 L68 62 Q56 56 52 46 Z"/>
+      <ellipse cx="72" cy="80" rx="26" ry="20" fill="#5f86b8" transform="rotate(-15 72 80)"/>
+      <path fill="#f6e3c9" d="M50 80 Q56 100 80 100 Q64 96 58 80 Z"/>
+      <ellipse cx="82" cy="92" rx="14" ry="16" fill="#5f86b8"/>
+      <path fill="#4a6ea0" d="M76 84 L88 82 L88 86 L76 88 Z M76 94 L90 92 L90 96 L76 98 Z"/>
+      <path fill="#5f86b8" d="M80 100 L92 100 L88 126 L98 128 L96 134 L76 134 L78 126 Z"/>
+      <path fill="#f6e3c9" d="M76 130 h20 v4 h-20 Z"/>
+      <path fill="#4a6ea0" d="M54 78 Q48 88 42 90 L44 95 Q54 92 60 84 Z"/>
+      <path fill="#5f86b8" d="M12 58 Q8 48 18 44 Q22 24 42 22 Q60 24 60 42 Q60 58 46 62 Q28 66 12 58 Z"/>
+      <path fill="#e8c27a" d="M20 44 Q22 24 42 22 Q60 24 60 42 Q44 34 20 44 Z"/>
+      <g fill="#f6e3b5"><circle cx="60" cy="48" r="3"/><circle cx="57" cy="55" r="3"/><circle cx="58" cy="30" r="2.6"/><circle cx="14" cy="46" r="2.4"/><circle cx="20" cy="40" r="2.2"/></g>
+      <path fill="#4a6ea0" d="M10 54 Q20 58 32 56 L30 60 Q18 62 10 58 Z"/>
+      <circle cx="26" cy="48" r="2.6" fill="#1f2340"/>
       </svg>
     </div>
     <svg class="scene" viewBox="0 0 390 72" preserveAspectRatio="none" aria-hidden="true">
