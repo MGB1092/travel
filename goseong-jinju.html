@@ -82,6 +82,10 @@
     .expo-table td:first-child { white-space: nowrap; font-family: var(--serif); color: var(--primary); }
     .expo-table td:last-child { color: var(--muted); font-size: 12px; }
     .expo-sub { font-family: var(--serif); font-size: 17px; font-weight: 400; margin: 18px 0 10px; }
+    .expo-sub small { font-family: inherit; font-size: 13px; color: var(--muted); margin-left: 4px; }
+    .expo-food td:first-child { white-space: normal; font-family: inherit; color: var(--text); }
+    .expo-food td:first-child b { font-weight: 600; color: var(--primary); font-size: 12px; }
+    .expo-food td:nth-child(2) { white-space: nowrap; font-family: var(--serif); color: var(--primary); }
     .expo-tips { margin: 0 0 12px; padding: 12px 14px 12px 30px; background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 0 var(--line); font-size: 14px; }
     .expo-tips li { margin: 3px 0; }
     .expo-tel { display: inline-block; margin: 0 0 12px; color: var(--primary); }
@@ -157,6 +161,12 @@
           <thead><tr><th>시간</th><th>프로그램</th><th>비고</th></tr></thead>
           <tbody>${X.schedule.map((r) => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
         </table>
+        ${X.food ? `
+        <h3 class="expo-sub">🍽️ 먹거리 운영 시간 <small>토요일 (야간 개장)</small></h3>
+        <table class="expo-table expo-food">
+          <thead><tr><th>시설</th><th>시간</th><th>비고</th></tr></thead>
+          <tbody>${X.food.map((r) => `<tr><td><b>${esc(r[0])}</b><br>${esc(r[1])}</td><td>${esc(r[2])}–${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("")}</tbody>
+        </table>` : ""}
         <h3 class="expo-sub">주요 체험 · 볼거리</h3>
         <ul class="list">${X.programs.map((p) => `
           <li><div class="emoji">${p.icon}</div><div>
