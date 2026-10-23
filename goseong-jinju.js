@@ -4,7 +4,7 @@
 // place 가 있으면 구글 지도 링크가 자동으로 붙습니다.
 window.TRIP = {
   title: "가을이네 고성 · 진주 1박2일 여행",
-  subtitle: "공룡 발자국 따라 고성, 남강 따라 진주",
+  subtitle: "공룡엑스포 가는 고성, 남강 따라 진주",
   startDate: "2026-10-24",
   endDate: "2026-10-25",
 
@@ -18,34 +18,40 @@ window.TRIP = {
   },
 
   info: [
-    { icon: "🚗", label: "이동", value: "고성 → 진주", memo: "출발지·이동수단 정해지면 수정" },
-    { icon: "🏨", label: "숙소 · 10/24(토) 1박", value: "미정", memo: "예약하면 이름·주소·체크인 시간 넣기" },
+    { icon: "🦕", label: "공룡엑스포 · 10/24(토)", value: "경남고성공룡세계엑스포", place: "경남고성공룡세계엑스포",
+      memo: "오전부터 저녁까지 · 입장권·공연 시간 미리 확인" },
+    { icon: "🏨", label: "숙소 · 10/24(토) 1박", value: "진주 뉴그랜드호텔", place: "진주 뉴그랜드호텔",
+      memo: "체크인 15:00부터 · 체크아웃 11:00까지" },
+    { icon: "💐", label: "결혼식 · 10/25(일) 11:00", value: "진주 동방호텔 3층", place: "진주 동방호텔",
+      memo: "호텔 체크아웃 후 바로 이동" },
     { icon: "🚨", label: "긴급 연락처", value: "119 (화재·구급) · 112 (경찰)", tel: "119" }
   ],
 
   days: [
     {
       date: "2026-10-24",
-      title: "고성 · 공룡 나라 🦕",
+      title: "고성 공룡엑스포 🦕",
       items: [
-        { time: "08:00", type: "move", title: "출발 → 고성", memo: "출발 시간·경로는 정해지면 수정" },
-        { time: "11:30", type: "sight", title: "고성공룡박물관", place: "고성공룡박물관", memo: "상족암군립공원 안 · 관람 시간·휴관일 확인" },
-        { time: "12:30", type: "food", title: "점심" },
-        { time: "14:00", type: "sight", title: "상족암 해안 산책 · 공룡 발자국 화석", place: "상족암군립공원", memo: "썰물 때 해안 동굴·발자국 보기 좋아요 · 물때 확인" },
-        { time: "17:00", type: "stay", title: "숙소 체크인", memo: "숙소 정해지면 장소 넣기" },
-        { time: "18:30", type: "food", title: "저녁" }
+        { time: "09:30", type: "move", title: "출발 → 고성 공룡엑스포" },
+        { time: "11:00", type: "sight", title: "공룡엑스포 관람", place: "경남고성공룡세계엑스포", memo: "도착 시간은 이동 거리에 따라 · 공연·체험 시간표 확인" },
+        { time: "12:30", type: "food", title: "점심 · 엑스포장" },
+        { time: "14:00", type: "sight", title: "공룡엑스포 계속 · 공연 · 체험", memo: "가을이 사진 많이 찍기 📸" },
+        { time: "18:00", type: "food", title: "엑스포 마무리 · 저녁" },
+        { time: "19:00", type: "move", title: "고성 → 진주", memo: "시간은 내비로 확인" },
+        { time: "20:00", type: "stay", title: "진주 뉴그랜드호텔 체크인", place: "진주 뉴그랜드호텔", memo: "체크인 15:00부터라 늦게 가도 OK" }
       ]
     },
     {
       date: "2026-10-25",
-      title: "진주 · 진주성과 남강 🏯",
+      title: "진주 · 결혼식 참석 💐",
       items: [
-        { time: "09:00", type: "stay", title: "체크아웃 · 진주로 이동" },
-        { time: "10:30", type: "sight", title: "진주성 · 촉석루", place: "진주성", memo: "남강 바라보며 성곽 산책" },
-        { time: "11:30", type: "sight", title: "국립진주박물관", place: "국립진주박물관", memo: "진주성 안" },
-        { time: "12:30", type: "food", title: "점심 · 진주냉면", place: "하연옥 본점 진주", memo: "육전 곁들이기" },
-        { time: "14:00", type: "sight", title: "남강 산책", place: "진주 남강" },
-        { time: "15:30", type: "move", title: "집으로" }
+        { time: "08:30", type: "food", title: "아침" },
+        { time: "10:15", type: "stay", title: "호텔 체크아웃", place: "진주 뉴그랜드호텔", memo: "체크아웃 11:00까지 · 결혼식 가기 전에 짐 챙겨 나오기" },
+        { time: "10:30", type: "move", title: "동방호텔로 이동", place: "진주 동방호텔" },
+        { time: "11:00", type: "etc", title: "결혼식 참석 · 동방호텔 3층", place: "진주 동방호텔" },
+        { time: "12:00", type: "food", title: "피로연 식사" },
+        { time: "14:00", type: "sight", title: "(여유 있으면) 진주성 · 촉석루 · 남강 산책", place: "진주성" },
+        { time: "16:00", type: "move", title: "집으로" }
       ]
     }
   ],
@@ -76,6 +82,6 @@ window.TRIP = {
   },
 
   checklist: [
-    "신분증", "숙소 예약 확인", "충전기 · 보조배터리", "편한 신발 (상족암 바위길)", "얇은 겉옷", "상비약", "물티슈"
+    "신분증", "공룡엑스포 입장권", "숙소 예약 확인", "결혼식 옷 · 축의금", "충전기 · 보조배터리", "편한 신발 (엑스포)", "얇은 겉옷", "상비약", "물티슈"
   ]
 };
