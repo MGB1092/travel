@@ -3,19 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#7a2320">
+  <meta name="theme-color" content="#0b4f6c">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>고성 · 진주 여행</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Serif+KR:wght@500;700&display=swap">
   <!-- 브라우저 캐시 때문에 새 화면 + 예전 스크립트가 섞이지 않도록 항상 최신 파일을 받음 -->
   <script>window.V = Date.now();</script>
   <script>document.write('<link rel="stylesheet" href="style.css?v=' + V + '">');</script>
   <noscript><link rel="stylesheet" href="style.css"></noscript>
+  <!-- 고성 페이지 전용 디자인: 바닷가 + 공룡 (공용 style.css 위에 덮어쓰기 · 도쿄 페이지에는 영향 없음) -->
   <style>
-    .hero .back { display: inline-block; margin-bottom: 10px; font-size: 13px; color: #fff8ee; text-decoration: none; opacity: .9; }
-    .scene .sea { fill: rgba(255,248,238,.22); }
+    :root {
+      --bg: #f3f0e2;            /* 모래사장 */
+      --card: #fffdf5;
+      --text: #1f2a24;
+      --muted: #6d7b70;
+      --line: #dde2cf;
+      --primary: #2f7d4f;       /* 공룡 초록 */
+      --primary-soft: #dcefdf;
+      --now: #e07b2e;
+      --gold: #c9962e;
+      --serif: "Jua", "Noto Serif KR", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121b18;
+        --card: #1b2622;
+        --text: #e6efe8;
+        --muted: #94a89b;
+        --line: #2c3b35;
+        --primary: #6cc28c;
+        --primary-soft: #1f3a2c;
+        --now: #f0a05a;
+        --gold: #e0b45a;
+      }
+    }
+    body { background-image: radial-gradient(rgba(60, 110, 80, .07) 1px, transparent 1px); }
+    /* Jua 는 굵기가 하나뿐이라 가짜 굵게 처리 끄기 */
+    .hero h1, h2, .dday, .tabs button, .card .time, .fx-rate b, .grp, .filter button { font-weight: 400; }
+    .hero h1 { font-size: 28px; }
+
+    /* 상단: 바다 → 숲 그라데이션 + 공룡 발자국 무늬 */
+    .hero {
+      color: #f4fbf6;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='%23fff' fill-opacity='.09'%3E%3Cg transform='translate(14 14) rotate(-15)'%3E%3Cellipse cx='0' cy='6' rx='6' ry='7'/%3E%3Cellipse cx='-7' cy='-5' rx='2.4' ry='5' transform='rotate(-25 -7 -5)'/%3E%3Cellipse cx='0' cy='-8' rx='2.4' ry='5.5'/%3E%3Cellipse cx='7' cy='-5' rx='2.4' ry='5' transform='rotate(25 7 -5)'/%3E%3C/g%3E%3Cg transform='translate(50 50) rotate(15)'%3E%3Cellipse cx='0' cy='6' rx='6' ry='7'/%3E%3Cellipse cx='-7' cy='-5' rx='2.4' ry='5' transform='rotate(-25 -7 -5)'/%3E%3Cellipse cx='0' cy='-8' rx='2.4' ry='5.5'/%3E%3Cellipse cx='7' cy='-5' rx='2.4' ry='5' transform='rotate(25 7 -5)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+        linear-gradient(170deg, #0b4f6c 0%, #1b8a8f 55%, #3fae7a 100%);
+    }
+    .hero .back { display: inline-block; margin-bottom: 10px; font-size: 13px; color: #f4fbf6; text-decoration: none; opacity: .9; }
+    .dday { color: #f4fbf6; background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.75); border-radius: 999px; }
+    .scene .fuji { fill: rgba(255,255,255,.12); }
+    .scene .sea { fill: rgba(255,255,255,.22); }
+    .scene .sea2 { fill: rgba(255,255,255,.14); }
+
+    /* 바닷가에 서 있는 브라키오사우루스 (실루엣) */
+    .hero > .dino {
+      position: absolute !important; z-index: 1 !important; right: 6px; bottom: 30px;
+      width: 150px; height: 112px; pointer-events: none;
+    }
+    .dino path, .dino ellipse, .dino rect { fill: #08303a; opacity: .5; }
+    .dino .eye { fill: #fff; opacity: .7; }
+    .hero h1, .hero .sub { margin-right: 96px; }
+
+    /* 해변을 걸어가는 작은 티라노 */
+    .hero > .walker {
+      position: absolute !important; z-index: 2; bottom: 10px; left: 100%;
+      font-size: 22px; pointer-events: none;
+      animation: walk 18s linear infinite;
+    }
+    @keyframes walk {
+      0%   { transform: translateX(0) translateY(0); }
+      5%   { transform: translateX(-5vw) translateY(-3px); }
+      10%  { transform: translateX(-10vw) translateY(0); }
+      100% { transform: translateX(calc(-100vw - 60px)) translateY(0); }
+    }
+    @media (min-width: 560px) { @keyframes walk { to { transform: translateX(-620px); } } }
+    @media (prefers-reduced-motion: reduce) { .walker { display: none; } }
+
+    .card .time { font-size: 15px; }
+    .tabs button.active { box-shadow: 0 2px 0 rgba(0,0,0,.08); }
+    @media (prefers-color-scheme: dark) {
+      .tabs button.active, .filter button.on { color: #0f1a15; }
+    }
   </style>
 </head>
 <body>
@@ -26,10 +97,22 @@
     <h1 id="title"></h1>
     <p class="sub" id="subtitle"></p>
     <p class="range" id="range"></p>
-    <div class="leaves" aria-hidden="true"><span>🍁</span><span>🍂</span><span>🍁</span><span>🍂</span><span>🍁</span></div>
+    <svg class="dino" viewBox="0 0 160 120" aria-hidden="true">
+      <path d="M68 74 Q54 42 44 16 L56 11 Q66 40 90 66 Z"/>
+      <ellipse cx="46" cy="13" rx="12" ry="7"/>
+      <ellipse cx="100" cy="80" rx="40" ry="21"/>
+      <path d="M136 76 Q152 84 160 100 Q146 90 130 88 Z"/>
+      <rect x="72" y="88" width="10" height="26" rx="4"/>
+      <rect x="88" y="90" width="10" height="24" rx="4"/>
+      <rect x="110" y="90" width="10" height="24" rx="4"/>
+      <rect x="124" y="86" width="10" height="28" rx="4"/>
+      <circle class="eye" cx="42" cy="11" r="1.6"/>
+    </svg>
+    <span class="walker" aria-hidden="true">🦖</span>
     <svg class="scene" viewBox="0 0 390 72" preserveAspectRatio="none" aria-hidden="true">
-      <!-- 남해안 산자락과 바다 -->
+      <!-- 남해안 섬 · 바다 물결 -->
       <path class="fuji" d="M0 72 L0 46 Q60 22 120 40 Q170 18 230 36 Q290 14 390 40 L390 72 Z"/>
+      <path class="sea2" d="M0 54 Q24 49 48 54 T97 54 T146 54 T195 54 T244 54 T293 54 T342 54 T391 54 L390 72 L0 72 Z"/>
       <path class="sea" d="M0 60 Q32 54 65 60 T130 60 T195 60 T260 60 T325 60 T390 60 L390 72 L0 72 Z"/>
       <path class="ground" d="M0 72 L0 64 Q195 52 390 64 L390 72 Z"/>
     </svg>
