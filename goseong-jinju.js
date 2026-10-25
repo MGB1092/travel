@@ -56,7 +56,8 @@ window.TRIP = {
         { time: "10:30", type: "move", title: "동방호텔로 이동", place: "진주 동방호텔" },
         { time: "11:00", type: "etc", title: "결혼식 참석 · 동방호텔 3층", place: "진주 동방호텔" },
         { time: "12:00", type: "food", title: "피로연 식사" },
-        { time: "14:00", type: "sight", title: "(여유 있으면) 진주성 · 촉석루 · 남강 산책", place: "진주성" },
+        { time: "13:00", type: "sight", title: "진주성 · 국립진주박물관", place: "국립진주박물관", memo: "박물관은 진주성 안 · 촉석루도 함께" },
+        { time: "15:00", type: "food", title: "식사 · 진주냉면 산홍 본점", place: "진주냉면 산홍 본점", memo: "진주냉면 · 밑반찬 푸짐" },
         { time: "16:00", type: "move", title: "집으로" }
       ]
     }
