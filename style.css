@@ -304,3 +304,4 @@ h2 small { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 
 @media (prefers-color-scheme: dark) { .filter button.on { color: #1b1613; } .filter button.on small { color: rgba(27,22,19,.75); } }
 .summary-card { background: var(--card); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 24px; box-shadow: 0 1px 0 var(--line); }
 .summary-card .review-area { margin-top: 0; }
+.hero .back { display: inline-block; margin-bottom: 10px; font-size: 13px; color: #fff8ee; text-decoration: none; opacity: .9; }
